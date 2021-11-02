@@ -13,7 +13,6 @@ const firebaseConfig = {
   databaseURL: Constants.manifest.extra.databaseURL,
   measurementId: Constants.manifest.extra.measurementId,
 };
-//console.log(firebaseConfig);
 
 let Firebase;
 // Firebase = initializeApp(firebaseConfig);
