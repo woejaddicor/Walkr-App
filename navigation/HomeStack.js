@@ -1,14 +1,64 @@
 import React from "react";
+import { View, Text, SafeAreaView, StyleSheet, IconButton } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "../screens/HomeScreen";
+import Profile from "../screens/Profile";
+import ListWalkersScreen from "../screens/ListWalkers";
+import MapViewScreen from "../screens/MapViewScreen";
+import BookingScreen from "../screens/BookingScreen";
+import ChatScreen from "../screens/ChatScreen";
+import SupportScreen from "../screens/SupportScreen";
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
+import { getAuth } from "@firebase/auth";
+import LandingPage from "../screens/LandingPage";
+import Header from "../screens/Header";
 
 const Drawer = createDrawerNavigator();
 
-export default function HomeStack() {
+const auth = getAuth();
+
+const handleSignOut = async () => {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+function CustomDrawerContent(props) {
   return (
-    <Drawer.Navigator screenOptions={{ headerShown: false }}>
-      <Drawer.Screen name="Home" component={HomeScreen} />
-    </Drawer.Navigator>
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label={() => <Text style={{ color: "white" }}>Log Out</Text>}
+        style={{ backgroundColor: "gray" }}
+        onPress={() => handleSignOut()}
+      />
+    </DrawerContentScrollView>
+  );
+}
+
+export default function HomeStack({ navigation }) {
+  return (
+    <>
+      <Header />
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+      >
+        <Drawer.Screen name="Home" component={LandingPage} />
+        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="Walkers" component={ListWalkersScreen} />
+        <Drawer.Screen name="Map View" component={MapViewScreen} />
+        <Drawer.Screen name="Bookings" component={BookingScreen} />
+        <Drawer.Screen name="Chat" component={ChatScreen} />
+        <Drawer.Screen name="Support" component={SupportScreen} />
+      </Drawer.Navigator>
+    </>
   );
 }
