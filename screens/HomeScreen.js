@@ -8,11 +8,12 @@ import db from "../config/Database";
 import { ref, onValue } from "firebase/database";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import HomeStack from "../navigation/HomeStack";
+import CreateProfile from "./CreateProfile";
 
 const auth = getAuth();
 
 export default function HomeScreen({ navigation }) {
-  const { user } = useContext(AuthenticatedUserContext);
+  const { user, profile, setProfile } = useContext(AuthenticatedUserContext);
 
   const handleSignOut = async () => {
     try {
@@ -23,10 +24,18 @@ export default function HomeScreen({ navigation }) {
   };
 
   useEffect(() => {
-    const demoRef = ref(db, "/");
+    const demoRef = ref(db, `users/owners/${user.uid}`);
     onValue(demoRef, (snapshot) => {
       const data = snapshot.val();
-      console.log("data >>> ", data);
+      if (data) {
+        setProfile(data);
+      } else {
+        const demoRef = ref(db, `users/walkers/${user.uid}`);
+        onValue(demoRef, (snapshot) => {
+          const data = snapshot.val();
+          setProfile(data);
+        });
+      }
     });
   }, []);
 
@@ -35,19 +44,25 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark-content" />
-      <View style={styles.row}>
-        <Text style={styles.title}>Welcome {user.email}!</Text>
-        <IconButton
-          name="logout"
-          size={24}
-          color="#fff"
-          onPress={handleSignOut}
-        />
-      </View>
-      <Text style={styles.text}>Your UID is: {user.uid} </Text>
-    </View>
+    <>
+      {!profile ? (
+        <CreateProfile />
+      ) : (
+        <View style={styles.container}>
+          <StatusBar style="dark-content" />
+          <View style={styles.row}>
+            <Text style={styles.title}>Welcome {user.email}!</Text>
+            <IconButton
+              name="logout"
+              size={24}
+              color="#fff"
+              onPress={handleSignOut}
+            />
+          </View>
+          <Text style={styles.text}>Your UID is: {user.uid} </Text>
+        </View>
+      )}
+    </>
   );
 }
 

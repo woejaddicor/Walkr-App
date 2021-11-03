@@ -17,6 +17,7 @@ import {
 import { getAuth } from "@firebase/auth";
 import LandingPage from "../screens/LandingPage";
 import Header from "../screens/Header";
+import CreateProfile from "../screens/CreateProfile";
 
 const Drawer = createDrawerNavigator();
 
@@ -48,11 +49,11 @@ export default function HomeStack({ navigation }) {
     <>
       <Header />
       <Drawer.Navigator
-        initialRouteName="Home"
+        initialRouteName="HomeScreen"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name="Home" component={LandingPage} />
-        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Profile" component={CreateProfile} />
         <Drawer.Screen name="Walkers" component={ListWalkersScreen} />
         <Drawer.Screen name="Map View" component={MapViewScreen} />
         <Drawer.Screen name="Bookings" component={BookingScreen} />

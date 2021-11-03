@@ -1,6 +1,6 @@
 import React from "react";
 import db from "../config/Database";
-import { ref, set } from "firebase/database";
+import { set, ref } from "firebase/database";
 import { useContext, useState } from "react";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import {
@@ -11,6 +11,18 @@ import {
   Button,
   Switch,
 } from "react-native";
+import ImagePickerUtil from "../utils/ImagePicker";
+import {
+  getStorage,
+  uploadBytes,
+  ref as pickref,
+  getDownloadURL,
+  put,
+  uploadBytesResumable,
+} from "@firebase/storage";
+import Firebase from "../config/Firebase";
+
+import storage from "@react-native-firebase/storage";
 
 function writeUserData(userId, name, email, imageUrl) {
   set(ref(db, "users/" + userId), {
@@ -30,73 +42,99 @@ const CreateProfile = () => {
   const [lastName, onChangeLastName] = useState();
   const [postcode, onChangePostcode] = useState();
   const [avatar, onChangeAvatar] = useState();
+  const [error, setError] = useState();
+  const [image, setImage] = useState(null);
 
   let userType;
 
   function handleButton() {
+    console.log(image);
     if (isOwner) {
       userType = "owners";
     } else {
       userType = "walkers";
     }
 
-    setProfile({
-      firstname: firstName,
-      lastname: lastName,
-      isowner: isOwner,
-      postcode,
-      avatar,
-    });
+    async function uploadImage(image) {
+      const storage = getStorage();
+      const response = await fetch(image);
+      const blob = await response.blob();
+      console.log(blob, "<<<< Blob");
+      var ref = pickref(storage, "upload");
+      uploadBytes(ref, blob)
+        .then(() => {
+          console.log("Successful upload");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    uploadImage(image);
+
     set(ref(db, `users/${userType}/` + user.uid), {
       firstname: firstName,
       lastname: lastName,
+      userType,
       postcode,
-      avatar,
-    });
+      avatar: image,
+    })
+      .then(() => {
+        setProfile({
+          firstname: firstName,
+          lastname: lastName,
+          userType,
+          postcode,
+          avatar: image,
+        });
+      })
+      .catch((err) => {
+        setError(err);
+      });
   }
 
-  console.log(user.uid);
-
   return (
-    <View>
-      <Text>User Input</Text>
-      <View style={styles.container}>
-        <Text>Walker</Text>
-        <Switch value={isOwner} onValueChange={toggleSwitch}></Switch>
-        <Text>Owner</Text>
+    <>
+      <View>
+        <Text>User Input</Text>
+        <View style={styles.container}>
+          <Text>Walker</Text>
+          <Switch value={isOwner} onValueChange={toggleSwitch}></Switch>
+          <Text>Owner</Text>
+        </View>
+
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeFirstName}
+          value={firstName}
+          placeholder="First name"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeLastName}
+          value={lastName}
+          placeholder="Last name"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangePostcode}
+          value={postcode}
+          placeholder="Postcode"
+        />
+        <ImagePickerUtil
+          setImage={setImage}
+          image={image}
+          style={styles.imagePicker}
+        />
+
+        <Button
+          title="Press Me"
+          onPress={handleButton}
+          disabled={!postcode || !lastName || !firstName || !image}
+        ></Button>
+        {error ? <Text>Something went wrong...</Text> : null}
       </View>
-
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeFirstName}
-        value={firstName}
-        placeholder="First name"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeLastName}
-        value={lastName}
-        placeholder="Last name"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangePostcode}
-        value={postcode}
-        placeholder="Postcode"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeAvatar}
-        value={avatar}
-        placeholder="Avatar"
-      />
-
-      <Button
-        title="Press Me"
-        onPress={handleButton}
-        disabled={!avatar || !postcode || !lastName || !firstName}
-      ></Button>
-    </View>
+    </>
   );
 };
 
@@ -106,8 +144,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    maxWidth: "50vw",
   },
+  imagePicker: {},
 });
 
 export default CreateProfile;
