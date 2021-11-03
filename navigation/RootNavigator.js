@@ -5,8 +5,9 @@ import { View, ActivityIndicator } from "react-native";
 // import Firebase from '../config/Firebase';
 import { AuthenticatedUserContext } from "./AuthenticatedUserProvider";
 import AuthStack from "./AuthStack";
-import HomeStack from "./HomeStack";
+// import HomeStack from "./HomeStack";
 import { getAuth } from "@firebase/auth";
+import CreateProfileStack from "./CreateProfileStack";
 
 const auth = getAuth();
 
@@ -38,6 +39,6 @@ export default function RootNavigator() {
   }
 
   return (
-    <NavigationContainer>{user ? <HomeStack /> : <AuthStack />}</NavigationContainer>
+    <NavigationContainer>{user ? <CreateProfileStack /> : <AuthStack />}</NavigationContainer>
   );
 }
