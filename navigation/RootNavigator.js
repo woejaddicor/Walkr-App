@@ -5,7 +5,7 @@ import { View, ActivityIndicator } from "react-native";
 // import Firebase from '../config/Firebase';
 import { AuthenticatedUserContext } from "./AuthenticatedUserProvider";
 import AuthStack from "./AuthStack";
-// import HomeStack from "./HomeStack";
+import HomeStack from "./HomeStack";
 import { getAuth } from "@firebase/auth";
 import CreateProfileStack from "./CreateProfileStack";
 
@@ -17,14 +17,18 @@ export default function RootNavigator() {
 
   useEffect(() => {
     // onAuthStateChanged returns an unsubscriber
-    const unsubscribeAuth = auth.onAuthStateChanged(async (authenticatedUser) => {
-      try {
-        await (authenticatedUser ? setUser(authenticatedUser) : setUser(null));
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
+    const unsubscribeAuth = auth.onAuthStateChanged(
+      async (authenticatedUser) => {
+        try {
+          await (authenticatedUser
+            ? setUser(authenticatedUser)
+            : setUser(null));
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    });
+    );
 
     // unsubscribe auth listener on unmount
     return unsubscribeAuth;
@@ -39,6 +43,8 @@ export default function RootNavigator() {
   }
 
   return (
-    <NavigationContainer>{user ? <CreateProfileStack /> : <AuthStack />}</NavigationContainer>
+    <NavigationContainer>
+      {user ? <HomeStack /> : <AuthStack />}
+    </NavigationContainer>
   );
 }
