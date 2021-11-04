@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Pressable, Image, View, Platform, StyleSheet } from "react-native";
+import {
+  Pressable,
+  Image,
+  View,
+  Platform,
+  StyleSheet,
+  Text,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import * as Permissions from 'expo-permissions';
 
 export default function ImagePickerUtil({ image, setImage }) {
   useEffect(() => {
@@ -24,8 +30,6 @@ export default function ImagePickerUtil({ image, setImage }) {
       quality: 1,
     });
 
-    console.log(result, "<<< Result");
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -33,17 +37,23 @@ export default function ImagePickerUtil({ image, setImage }) {
 
   return (
     <View>
-      <Pressable style={styles.imagePicker} title="Pick an image" onPress={pickImage}></Pressable>
+      <Pressable
+        style={styles.imagePicker}
+        title="Pick an image"
+        onPress={pickImage}
+      >
+        <Text>Test2</Text>
+      </Pressable>
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
     </View>
   );
 }
-const styles=StyleSheet.create ({
+const styles = StyleSheet.create({
   imagePicker: {
     width: 300,
     margin: 10,
-    backgroundColor: 'purple'
-  }
-})
+    backgroundColor: "purple",
+  },
+});

@@ -10,28 +10,10 @@ import {
   View,
   Pressable,
   Switch,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
-import {
-  getStorage,
-  uploadBytes,
-  ref as pickref,
-  getDownloadURL,
-  put,
-  uploadBytesResumable,
-} from "@firebase/storage";
-// import Firebase from "../config/Firebase";
-
-// import storage from "@react-native-firebase/storage";
-
-function writeUserData(userId, name, email, imageUrl) {
-  set(ref(db, "users/" + userId), {
-    username: name,
-    email: email,
-    profile_picture: imageUrl,
-  });
-}
+import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
 
 const CreateProfile = () => {
   const { user, setUser, profile, setProfile } = useContext(
@@ -42,15 +24,13 @@ const CreateProfile = () => {
   const [firstName, onChangeFirstName] = useState();
   const [lastName, onChangeLastName] = useState();
   const [postcode, onChangePostcode] = useState();
-  const [avatar, onChangeAvatar] = useState();
   const [error, setError] = useState();
   const [image, setImage] = useState(null);
-  const [bio, onChangeBio] = useState()
+  const [bio, onChangeBio] = useState("");
 
   let userType;
 
   function handleButton() {
-    console.log(image);
     if (isOwner) {
       userType = "owners";
     } else {
@@ -61,14 +41,12 @@ const CreateProfile = () => {
       const storage = getStorage();
       const response = await fetch(image);
       const blob = await response.blob();
-      console.log(blob, "<<<< Blob");
-      var ref = pickref(storage, "upload");
+      var ref = pickref(storage, `users/${user.uid}/avatar`);
       uploadBytes(ref, blob)
-        .then(() => {
-          console.log("Successful upload");
-        })
+        // .then(() => {
+        // })
         .catch((e) => {
-          console.log(e);
+          throw e;
         });
     }
 
@@ -79,7 +57,8 @@ const CreateProfile = () => {
       lastname: lastName,
       userType,
       postcode,
-      avatar: image,
+      bio,
+      avatar: `users/${user.uid}/avatar`,
     })
       .then(() => {
         setProfile({
@@ -87,7 +66,8 @@ const CreateProfile = () => {
           lastname: lastName,
           userType,
           postcode,
-          avatar: image,
+          bio,
+          avatar: `users/${user.uid}/avatar`,
         });
       })
       .catch((err) => {
@@ -124,16 +104,16 @@ const CreateProfile = () => {
           value={postcode}
           placeholder="Postcode"
         />
-        {!isOwner ?
-        <TextInput
-        style={styles.input}
-          onChangeText={onChangeBio}
-          value={bio}
-          placeholder="Bio"
-          numberOfLines={5}
-          multiline={true}
-          /> : null
-        }
+        {!isOwner ? (
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeBio}
+            value={bio}
+            placeholder="Bio"
+            numberOfLines={5}
+            multiline={true}
+          />
+        ) : null}
         <ImagePickerUtil
           setImage={setImage}
           image={image}
@@ -144,7 +124,9 @@ const CreateProfile = () => {
           style={styles.imagePicker}
           onPress={handleButton}
           disabled={!postcode || !lastName || !firstName || !image}
-        ></Pressable>
+        >
+          <Text>Test</Text>
+        </Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
       </View>
     </SafeAreaView>
@@ -153,26 +135,25 @@ const CreateProfile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
     backgroundColor: "red",
     flexWrap: "wrap",
-    width: "100%"
+    width: "100%",
   },
   input: {
     backgroundColor: "white",
     padding: 10,
     margin: 10,
     borderRadius: 25,
-    width: "80%"
+    width: "80%",
   },
   imagePicker: {
     width: 200,
     margin: 10,
-    backgroundColor: 'purple',
-    textAlign: "center"
+    backgroundColor: "purple",
+    textAlign: "center",
   },
 });
 
