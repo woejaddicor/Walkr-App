@@ -7,7 +7,7 @@ const users = ref(db, "/");
 
 onValue(users, (snapshot) => {
   const data = snapshot.val();
-  //console.log(data.users, "<<<< user ");
+
 });
 
 const Profile = () => {

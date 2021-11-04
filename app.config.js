@@ -12,6 +12,15 @@ export default {
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
+    plugins: [
+      [
+        "expo-image-picker",
+        {
+          photosPermission: "Access photos to update your profile picture",
+        },
+      ],
+    ],
+
     updates: {
       fallbackToCacheTimeout: 0,
     },
