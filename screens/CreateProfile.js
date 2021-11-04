@@ -8,8 +8,9 @@ import {
   Text,
   TextInput,
   View,
-  Button,
+  Pressable,
   Switch,
+  SafeAreaView
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
 import {
@@ -20,9 +21,9 @@ import {
   put,
   uploadBytesResumable,
 } from "@firebase/storage";
-import Firebase from "../config/Firebase";
+// import Firebase from "../config/Firebase";
 
-import storage from "@react-native-firebase/storage";
+// import storage from "@react-native-firebase/storage";
 
 function writeUserData(userId, name, email, imageUrl) {
   set(ref(db, "users/" + userId), {
@@ -44,6 +45,7 @@ const CreateProfile = () => {
   const [avatar, onChangeAvatar] = useState();
   const [error, setError] = useState();
   const [image, setImage] = useState(null);
+  const [bio, onChangeBio] = useState()
 
   let userType;
 
@@ -94,16 +96,17 @@ const CreateProfile = () => {
   }
 
   return (
-    <>
-      <View>
+    <SafeAreaView>
+      <View style={styles.container}>
         <Text>User Input</Text>
-        <View style={styles.container}>
+
+        <View>
           <Text>Walker</Text>
           <Switch value={isOwner} onValueChange={toggleSwitch}></Switch>
           <Text>Owner</Text>
         </View>
-
         <TextInput
+          title="firstname"
           style={styles.input}
           onChangeText={onChangeFirstName}
           value={firstName}
@@ -121,31 +124,56 @@ const CreateProfile = () => {
           value={postcode}
           placeholder="Postcode"
         />
+        {!isOwner ?
+        <TextInput
+        style={styles.input}
+          onChangeText={onChangeBio}
+          value={bio}
+          placeholder="Bio"
+          numberOfLines={5}
+          multiline={true}
+          /> : null
+        }
         <ImagePickerUtil
           setImage={setImage}
           image={image}
           style={styles.imagePicker}
         />
 
-        <Button
-          title="Press Me"
+        <Pressable
+          style={styles.imagePicker}
           onPress={handleButton}
           disabled={!postcode || !lastName || !firstName || !image}
-        ></Button>
+        ></Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
+    backgroundColor: "red",
+    flexWrap: "wrap",
+    width: "100%"
   },
-  imagePicker: {},
+  input: {
+    backgroundColor: "white",
+    padding: 10,
+    margin: 10,
+    borderRadius: 25,
+    width: "80%"
+  },
+  imagePicker: {
+    width: 200,
+    margin: 10,
+    backgroundColor: 'purple',
+    textAlign: "center"
+  },
 });
 
 export default CreateProfile;
