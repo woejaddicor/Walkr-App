@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
 import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
+import geoFetch from "../utils/server";
 
 const CreateProfile = () => {
   const { user, setUser, profile, setProfile } = useContext(
@@ -27,10 +28,22 @@ const CreateProfile = () => {
   const [error, setError] = useState();
   const [image, setImage] = useState(null);
   const [bio, onChangeBio] = useState("");
+  const [geoData, setGeoData] = useState({});
 
   let userType;
 
-  function handleButton() {
+  console.log(geoData);
+
+  async function handleButton() {
+    await geoFetch()
+      .then((res) => {
+        console.log(res, "<<<< create profile");
+        setGeoData(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
     if (isOwner) {
       userType = "owners";
     } else {
@@ -42,12 +55,9 @@ const CreateProfile = () => {
       const response = await fetch(image);
       const blob = await response.blob();
       var ref = pickref(storage, `users/${user.uid}/avatar`);
-      uploadBytes(ref, blob)
-        // .then(() => {
-        // })
-        .catch((e) => {
-          throw e;
-        });
+      uploadBytes(ref, blob).catch((e) => {
+        throw e;
+      });
     }
 
     uploadImage(image);
