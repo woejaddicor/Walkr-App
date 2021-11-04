@@ -1,12 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import db from "../config/Database";
 import { ref, onValue } from "firebase/database";
 import { useState, useEffect } from "react";
+// import Collapsible from 'react-native-collapsible';
+import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+import { Button } from "../components";
 
-const ListWalkers = () => {
+
+const ListWalkers = ({navigation}) => {
   const [walkers, setWalkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   useEffect(() => {
     const users = ref(db, "users/walkers/");
@@ -33,18 +38,32 @@ const ListWalkers = () => {
         <Text>Is loading</Text>
       </View>
     );
-  console.log(walkers);
+  console.log(walkers[0].avatar);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>All Walkers in your area</Text>
-      <View style={styles.card}>
+      <View>
         {walkers.map((walker) => {
           return (
-            <View>
-              <Text>First name: {walker.firstname}</Text>
-              <Text>Las name: {walker.lastname}</Text>
-              <Text>Post code: {walker.postcode}</Text>
-            </View>
+            <Collapse style={styles.card}>
+  <CollapseHeader>  
+        <Text>Full Name: {walker.firstname} {walker.lastname}</Text>
+          <Text>Post Code: {walker.postcode}</Text>  
+  </CollapseHeader>
+    <CollapseBody>
+      <Text>Magic!!</Text>
+      <Text>Magic!!</Text>
+      <Text>Magic!!</Text>
+      <Text>Magic!!</Text>
+      <Text>Magic!!</Text>
+      <Text>Magic!!</Text>
+      <Button
+  title={walker.firstname}
+  color="#841584"
+  accessibilityLabel="Chat with this walker"
+/>
+  </CollapseBody>
+</Collapse>
           );
         })}
       </View>
