@@ -8,29 +8,13 @@ import {
   Text,
   TextInput,
   View,
-  Button,
+  Pressable,
   Switch,
+  SafeAreaView,
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
-import {
-  getStorage,
-  uploadBytes,
-  ref as pickref,
-  getDownloadURL,
-  put,
-  uploadBytesResumable,
-} from "@firebase/storage";
-import Firebase from "../config/Firebase";
-
-import storage from "@react-native-firebase/storage";
-
-function writeUserData(userId, name, email, imageUrl) {
-  set(ref(db, "users/" + userId), {
-    username: name,
-    email: email,
-    profile_picture: imageUrl,
-  });
-}
+import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
+import geoFetch from "../utils/server";
 
 const CreateProfile = () => {
   const { user, setUser, profile, setProfile } = useContext(
@@ -41,69 +25,109 @@ const CreateProfile = () => {
   const [firstName, onChangeFirstName] = useState();
   const [lastName, onChangeLastName] = useState();
   const [postcode, onChangePostcode] = useState();
-  const [avatar, onChangeAvatar] = useState();
   const [error, setError] = useState();
   const [image, setImage] = useState(null);
+  const [bio, onChangeBio] = useState("");
+  const [geoData, setGeoData] = useState({});
 
   let userType;
 
-  function handleButton() {
-    console.log(image);
+  const handleButton = () => {
     if (isOwner) {
       userType = "owners";
     } else {
       userType = "walkers";
     }
 
-    async function uploadImage(image) {
-      const storage = getStorage();
-      const response = await fetch(image);
-      const blob = await response.blob();
-      console.log(blob, "<<<< Blob");
-      var ref = pickref(storage, "upload");
-      uploadBytes(ref, blob)
-        .then(() => {
-          console.log("Successful upload");
-        })
-        .catch((e) => {
-          console.log(e);
+    // async function uploadImage(image) {
+    //   const storage = getStorage();
+    //   const response = await fetch(image);
+    //   const blob = await response.blob();
+    //   var ref = pickref(storage, `users/${user.uid}/avatar`);
+    //   uploadBytes(ref, blob).catch((e) => {
+    //     throw e;
+    //   });
+
+    geoFetch(postcode)
+      .then((res) => {
+        return res;
+      })
+      .then((res) => {
+        console.log(res);
+        set(ref(db, `users/${userType}/` + user.uid), {
+          firstname: firstName,
+          lastname: lastName,
+          userType,
+          postcode,
+          bio,
+          avatar: `users/${user.uid}/avatar`,
+          longitude: res.longitude,
+          latitude: res.latitude,
         });
-    }
-
-    uploadImage(image);
-
-    set(ref(db, `users/${userType}/` + user.uid), {
-      firstname: firstName,
-      lastname: lastName,
-      userType,
-      postcode,
-      avatar: image,
-    })
-      .then(() => {
+        return res;
+      })
+      .then((res) => {
+        console.log(res);
         setProfile({
           firstname: firstName,
           lastname: lastName,
           userType,
           postcode,
-          avatar: image,
+          bio,
+          avatar: `users/${user.uid}/avatar`,
+          longitude: res.longitude,
+          latitude: res.latitude,
         });
+        console.log(profile, "<<< Profile");
       })
+      // .then(() => {
+      //   uploadImage(image);
+      // })
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
-  }
+  };
+
+  // set(ref(db, `users/${userType}/` + user.uid), {
+  //   firstname: firstName,
+  //   lastname: lastName,
+  //   userType,
+  //   postcode,
+  //   bio,
+  //   avatar: `users/${user.uid}/avatar`,
+  //   longitude: geoData.longitude,
+  //   latitude: geoData.latitude,
+  // })
+  //   .then(() => {
+  //     setProfile({
+  //       firstname: firstName,
+  //       lastname: lastName,
+  //       userType,
+  //       postcode,
+  //       bio,
+  //       avatar: `users/${user.uid}/avatar`,
+  //       longitude: geoData.longitude,
+  //       latitude: geoData.latitude,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     setError(err);
+  //   });
+  // };
 
   return (
-    <>
-      <View>
+    <SafeAreaView>
+      <View style={styles.container}>
         <Text>User Input</Text>
-        <View style={styles.container}>
+
+        <View>
           <Text>Walker</Text>
           <Switch value={isOwner} onValueChange={toggleSwitch}></Switch>
           <Text>Owner</Text>
         </View>
-
         <TextInput
+          title="firstname"
           style={styles.input}
           onChangeText={onChangeFirstName}
           value={firstName}
@@ -121,31 +145,57 @@ const CreateProfile = () => {
           value={postcode}
           placeholder="Postcode"
         />
+        {!isOwner ? (
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeBio}
+            value={bio}
+            placeholder="Bio"
+            numberOfLines={5}
+            multiline={true}
+          />
+        ) : null}
         <ImagePickerUtil
           setImage={setImage}
           image={image}
           style={styles.imagePicker}
         />
 
-        <Button
-          title="Press Me"
+        <Pressable
+          style={styles.imagePicker}
           onPress={handleButton}
           disabled={!postcode || !lastName || !firstName || !image}
-        ></Button>
+        >
+          <Text>Test</Text>
+        </Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
+    backgroundColor: "red",
+    flexWrap: "wrap",
+    width: "100%",
   },
-  imagePicker: {},
+  input: {
+    backgroundColor: "white",
+    padding: 10,
+    margin: 10,
+    borderRadius: 25,
+    width: "80%",
+  },
+  imagePicker: {
+    width: 200,
+    margin: 10,
+    backgroundColor: "purple",
+    textAlign: "center",
+  },
 });
 
 export default CreateProfile;
