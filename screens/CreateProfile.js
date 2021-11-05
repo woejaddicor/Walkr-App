@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
 import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
+import SelectDropdown from "react-native-select-dropdown";
 
 import geoFetch from "../utils/server";
 
@@ -21,22 +22,22 @@ const CreateProfile = () => {
   const { user, setUser, profile, setProfile } = useContext(
     AuthenticatedUserContext
   );
-  const [isOwner, setIsOwner] = useState(true);
-  const toggleSwitch = () => setIsOwner((previousState) => !previousState);
+  const [isOwner, setIsOwner] = useState(null);
   const [firstName, onChangeFirstName] = useState();
   const [lastName, onChangeLastName] = useState();
   const [postcode, onChangePostcode] = useState();
   const [error, setError] = useState();
   const [image, setImage] = useState(null);
   const [bio, onChangeBio] = useState("");
-  const [geoData, setGeoData] = useState({});
+  const [success, setSuccess] = useState(false);
 
   let userType;
 
   const storage = getStorage();
 
   const handleButton = () => {
-    if (isOwner) {
+    setSuccess(false);
+    if (isOwner === "Owner") {
       userType = "owners";
     } else {
       userType = "walkers";
@@ -83,21 +84,44 @@ const CreateProfile = () => {
         const ref = pickref(storage, `users/${user.uid}/avatar`);
         uploadBytes(ref, blob);
       })
+      .then(() => {
+        onChangeFirstName("");
+        onChangeLastName("");
+        onChangePostcode("");
+        setImage(null);
+        onChangeBio("");
+        setSuccess(true);
+      })
       .catch((err) => {
         console.log(err);
         setError(err);
       });
   };
 
+  const userSelect = ["Walker", "Owner"];
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <Text>User Input</Text>
 
-        <View>
-          <Text>Walker</Text>
-          <Switch value={isOwner} onValueChange={toggleSwitch}></Switch>
-          <Text>Owner</Text>
+        <View style={styles.switch}>
+          <SelectDropdown
+            data={userSelect}
+            onSelect={(selectedItem, index) => {
+              setIsOwner(selectedItem);
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem;
+            }}
+            rowTextForSelection={(item, index) => {
+              return item;
+            }}
+          />
+
+          {/* <Text>Walker</Text> */}
+          {/* <Switch value={isOwner} onValueChange={toggleSwitch}></Switch> */}
+          {/* <Text>Owner</Text> */}
         </View>
         <TextInput
           title="firstname"
@@ -118,7 +142,7 @@ const CreateProfile = () => {
           value={postcode}
           placeholder="Postcode"
         />
-        {!isOwner ? (
+        {isOwner === "Walker" ? (
           <TextInput
             style={styles.input}
             onChangeText={onChangeBio}
@@ -131,17 +155,22 @@ const CreateProfile = () => {
         <ImagePickerUtil
           setImage={setImage}
           image={image}
-          style={styles.imagePicker}
+          style={styles.submitButton}
         />
 
         <Pressable
-          style={styles.imagePicker}
+          style={
+            !postcode || !lastName || !firstName || !image || !isOwner
+              ? styles.disabledButton
+              : styles.submitButton
+          }
           onPress={handleButton}
-          disabled={!postcode || !lastName || !firstName || !image}
+          disabled={!postcode || !lastName || !firstName || !image || !isOwner}
         >
-          <Text>Test</Text>
+          <Text style={styles.submitButtonText}>Submit Profile</Text>
         </Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
+        {success && <Text>Profile successfully updated!</Text>}
       </View>
     </SafeAreaView>
   );
@@ -151,8 +180,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "column",
-    backgroundColor: "red",
+    backgroundColor: "lightgray",
     flexWrap: "wrap",
     width: "100%",
   },
@@ -163,11 +191,30 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     width: "80%",
   },
-  imagePicker: {
-    width: 200,
+  submitButton: {
+    width: "80%",
     margin: 10,
-    backgroundColor: "purple",
+    borderRadius: 25,
+    backgroundColor: "gray",
     textAlign: "center",
+    padding: 10,
+  },
+  submitButtonText: {
+    fontSize: 20,
+  },
+  disabledButton: {
+    width: "80%",
+    margin: 10,
+    borderRadius: 25,
+    backgroundColor: "blue",
+    textAlign: "center",
+    padding: 10,
+  },
+  switch: {
+    flex: 1,
+    flexDirection: "row",
+    height: 50,
+    marginBottom: 40,
   },
 });
 
