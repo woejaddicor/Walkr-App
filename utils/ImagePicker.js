@@ -36,24 +36,38 @@ export default function ImagePickerUtil({ image, setImage }) {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Pressable
         style={styles.imagePicker}
         title="Pick an image"
         onPress={pickImage}
       >
-        <Text>Test2</Text>
+        <Text style={styles.imageButtonText}>Choose profile picture</Text>
       </Pressable>
       {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <Image
+          source={{ uri: image }}
+          style={{ width: 200, height: 200, alignContent: "center" }}
+        />
       )}
     </View>
   );
 }
 const styles = StyleSheet.create({
   imagePicker: {
-    width: 300,
+    width: "80%",
+    fontSize: 25,
     margin: 10,
-    backgroundColor: "purple",
+    padding: 10,
+    borderRadius: 25,
+    backgroundColor: "gray",
+    textAlign: "center",
+  },
+  container: {
+    width: "100%",
+    alignItems: "center",
+  },
+  imageButtonText: {
+    fontSize: 20,
   },
 });

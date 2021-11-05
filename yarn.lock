@@ -2015,12 +2015,10 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-
 "@types/geojson@^7946.0.7":
   version "7946.0.8"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.8.tgz#30744afdb385e2945e22f3b033f897f76b1f12ca"
   integrity sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA==
-
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
@@ -2122,7 +2120,6 @@ accepts@^1.3.7, accepts@~1.3.5, accepts@~1.3.7:
   dependencies:
     mime-types "~2.1.24"
     negotiator "0.6.2"
-
 
 accordion-collapse-react-native@^1.1.0:
   version "1.1.0"
@@ -2304,7 +2301,6 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
-
 
 axios@^0.24.0:
   version "0.24.0"
@@ -3271,7 +3267,6 @@ expo-modules-core@~0.4.4, expo-modules-core@~0.4.5:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
-
 expo-permissions@^13.0.3:
   version "13.0.3"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-13.0.3.tgz#93d4395658d9967d257faa31bbec096551654aaf"
@@ -3562,12 +3557,10 @@ flow-parser@^0.121.0:
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.121.0.tgz#9f9898eaec91a9f7c323e9e992d81ab5c58e618f"
   integrity sha512-1gIBiWJNR0tKUNv8gZuk7l9rVX06OuLzY9AoGio7y/JT4V1IZErEMEq2TJS+PFcw/y0RshZ1J/27VfK1UQzYVg==
 
-
 follow-redirects@^1.14.4:
   version "1.14.5"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
   integrity sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==
-
 
 fontfaceobserver@^2.1.0:
   version "2.1.0"
@@ -4586,7 +4579,6 @@ lodash.get@4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
-
 
 lodash.includes@^4.3.0:
   version "4.3.0"
@@ -5782,12 +5774,10 @@ react-native-codegen@^0.0.6:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-
 react-native-collapsible@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-1.6.0.tgz#ca261ffff16914f872059bb0972e3a78c4b37f9c"
   integrity sha512-beZjdgbT9Y/Pg591Xy5XkKG20HffJiVad4n9bfcUF/f783A+tvOVXnqvbS58Lkaym93mi4jcDPMuW9Vc1t6rqg==
-
 
 react-native-gesture-handler@~1.10.2:
   version "1.10.3"
@@ -5799,7 +5789,6 @@ react-native-gesture-handler@~1.10.2:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
-
 
 react-native-maps@^0.28.0:
   version "0.28.0"
@@ -5829,6 +5818,11 @@ react-native-screens@~3.8.0:
   integrity sha512-lHrnB/elAoMJKv8O12U6BLgeup4lB6ZKJHEOVuG/D72nv/OE9wUusbou6YCB5tp3YbaSpHflPnkFmHA/vCejpw==
   dependencies:
     warn-once "^0.1.0"
+
+react-native-select-dropdown@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-select-dropdown/-/react-native-select-dropdown-1.3.0.tgz#9c45773a6fd52ee08c266fad422e3728b3a311b1"
+  integrity sha512-smrRro240/id5kIWd1ozBuXfvS45BHiRz4fJiPQ7mZPkKMG5OPYn6DKFUkknzW+iqgLjtrSsv2zw0pkJAS7K2g==
 
 react-native-web@0.17.1:
   version "0.17.1"

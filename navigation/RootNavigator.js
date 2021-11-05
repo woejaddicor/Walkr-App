@@ -7,7 +7,6 @@ import { AuthenticatedUserContext } from "./AuthenticatedUserProvider";
 import AuthStack from "./AuthStack";
 import HomeStack from "./HomeStack";
 import { getAuth } from "@firebase/auth";
-import CreateProfileStack from "./CreateProfileStack";
 
 const auth = getAuth();
 
