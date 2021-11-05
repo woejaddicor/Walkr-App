@@ -52,7 +52,7 @@ const ListWalkers = ({navigation}) => {
   </CollapseHeader>
     <CollapseBody>
       <Text>Magic!!</Text>
-      <Text>Magic!!</Text>
+      <Text>Magic!!!</Text>
       <Text>Magic!!</Text>
       <Text>Magic!!</Text>
       <Text>Magic!!</Text>
