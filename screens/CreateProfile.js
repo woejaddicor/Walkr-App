@@ -12,17 +12,7 @@ import {
   Switch,
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
-import {
-  getStorage,
-  uploadBytes,
-  ref as pickref,
-  getDownloadURL,
-  put,
-  uploadBytesResumable,
-} from "@firebase/storage";
-import Firebase from "../config/Firebase";
-
-import storage from "@react-native-firebase/storage";
+import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
 
 function writeUserData(userId, name, email, imageUrl) {
   set(ref(db, "users/" + userId), {
