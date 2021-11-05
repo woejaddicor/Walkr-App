@@ -7,7 +7,6 @@ import { IconButton } from "../components";
 import db from "../config/Database";
 import { ref, onValue } from "firebase/database";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
-import HomeStack from "../navigation/HomeStack";
 import CreateProfile from "./CreateProfile";
 
 const auth = getAuth();

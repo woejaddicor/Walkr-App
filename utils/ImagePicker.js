@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform } from "react-native";
+import {
+  Pressable,
+  Image,
+  View,
+  Platform,
+  StyleSheet,
+  Text,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 export default function ImagePickerUtil({ image, setImage }) {
@@ -23,8 +30,6 @@ export default function ImagePickerUtil({ image, setImage }) {
       quality: 1,
     });
 
-    console.log(result, "<<< Result");
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -32,10 +37,23 @@ export default function ImagePickerUtil({ image, setImage }) {
 
   return (
     <View>
-      <Button title="Pick an image" onPress={pickImage} />
+      <Pressable
+        style={styles.imagePicker}
+        title="Pick an image"
+        onPress={pickImage}
+      >
+        <Text>Test2</Text>
+      </Pressable>
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
     </View>
   );
 }
+const styles = StyleSheet.create({
+  imagePicker: {
+    width: 300,
+    margin: 10,
+    backgroundColor: "purple",
+  },
+});
