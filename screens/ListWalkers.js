@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import db from "../config/Database";
 import { ref, onValue } from "firebase/database";
 import { useState, useEffect } from "react";
-// import Collapsible from 'react-native-collapsible';
 import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
 import { Button } from "../components";
 
@@ -18,9 +17,9 @@ const ListWalkers = ({navigation}) => {
     onValue(users, (snapshot) => {
       const data = snapshot.val();
       const userIds = Object.keys(data);
-      console.log(data, "<===data");
+      // console.log(data, "<===data");
       const result = Object.values(data);
-      console.log(result, "<==result");
+      // console.log(result, "<==result");
 
       const newArr = [];
       const userArr = userIds.map((id) => {
