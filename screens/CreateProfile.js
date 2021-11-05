@@ -15,10 +15,7 @@ import {
 import ImagePickerUtil from "../utils/ImagePicker";
 import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
 
-
-
 import geoFetch from "../utils/server";
-
 
 const CreateProfile = () => {
   const { user, setUser, profile, setProfile } = useContext(
@@ -36,6 +33,8 @@ const CreateProfile = () => {
 
   let userType;
 
+  const storage = getStorage();
+
   const handleButton = () => {
     if (isOwner) {
       userType = "owners";
@@ -43,21 +42,11 @@ const CreateProfile = () => {
       userType = "walkers";
     }
 
-    // async function uploadImage(image) {
-    //   const storage = getStorage();
-    //   const response = await fetch(image);
-    //   const blob = await response.blob();
-    //   var ref = pickref(storage, `users/${user.uid}/avatar`);
-    //   uploadBytes(ref, blob).catch((e) => {
-    //     throw e;
-    //   });
-
     geoFetch(postcode)
       .then((res) => {
         return res;
       })
       .then((res) => {
-        console.log(res);
         set(ref(db, `users/${userType}/` + user.uid), {
           firstname: firstName,
           lastname: lastName,
@@ -71,7 +60,6 @@ const CreateProfile = () => {
         return res;
       })
       .then((res) => {
-        console.log(res);
         setProfile({
           firstname: firstName,
           lastname: lastName,
@@ -82,43 +70,24 @@ const CreateProfile = () => {
           longitude: res.longitude,
           latitude: res.latitude,
         });
-        console.log(profile, "<<< Profile");
       })
-      // .then(() => {
-      //   uploadImage(image);
-      // })
+      .then(() => {
+        const response = fetch(image);
+        return response;
+      })
+      .then((response) => {
+        const blob = response.blob();
+        return blob;
+      })
+      .then((blob) => {
+        const ref = pickref(storage, `users/${user.uid}/avatar`);
+        uploadBytes(ref, blob);
+      })
       .catch((err) => {
         console.log(err);
         setError(err);
       });
   };
-
-  // set(ref(db, `users/${userType}/` + user.uid), {
-  //   firstname: firstName,
-  //   lastname: lastName,
-  //   userType,
-  //   postcode,
-  //   bio,
-  //   avatar: `users/${user.uid}/avatar`,
-  //   longitude: geoData.longitude,
-  //   latitude: geoData.latitude,
-  // })
-  //   .then(() => {
-  //     setProfile({
-  //       firstname: firstName,
-  //       lastname: lastName,
-  //       userType,
-  //       postcode,
-  //       bio,
-  //       avatar: `users/${user.uid}/avatar`,
-  //       longitude: geoData.longitude,
-  //       latitude: geoData.latitude,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     setError(err);
-  //   });
-  // };
 
   return (
     <SafeAreaView>
