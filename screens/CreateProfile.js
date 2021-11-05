@@ -32,45 +32,42 @@ const CreateProfile = () => {
 
   let userType;
 
-  console.log(geoData);
-
-  async function handleButton() {
-    await geoFetch()
-      .then((res) => {
-        console.log(res, "<<<< create profile");
-        setGeoData(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
+  const handleButton = () => {
     if (isOwner) {
       userType = "owners";
     } else {
       userType = "walkers";
     }
 
-    async function uploadImage(image) {
-      const storage = getStorage();
-      const response = await fetch(image);
-      const blob = await response.blob();
-      var ref = pickref(storage, `users/${user.uid}/avatar`);
-      uploadBytes(ref, blob).catch((e) => {
-        throw e;
-      });
-    }
+    // async function uploadImage(image) {
+    //   const storage = getStorage();
+    //   const response = await fetch(image);
+    //   const blob = await response.blob();
+    //   var ref = pickref(storage, `users/${user.uid}/avatar`);
+    //   uploadBytes(ref, blob).catch((e) => {
+    //     throw e;
+    //   });
 
-    uploadImage(image);
-
-    set(ref(db, `users/${userType}/` + user.uid), {
-      firstname: firstName,
-      lastname: lastName,
-      userType,
-      postcode,
-      bio,
-      avatar: `users/${user.uid}/avatar`,
-    })
-      .then(() => {
+    geoFetch(postcode)
+      .then((res) => {
+        return res;
+      })
+      .then((res) => {
+        console.log(res);
+        set(ref(db, `users/${userType}/` + user.uid), {
+          firstname: firstName,
+          lastname: lastName,
+          userType,
+          postcode,
+          bio,
+          avatar: `users/${user.uid}/avatar`,
+          longitude: res.longitude,
+          latitude: res.latitude,
+        });
+        return res;
+      })
+      .then((res) => {
+        console.log(res);
         setProfile({
           firstname: firstName,
           lastname: lastName,
@@ -78,12 +75,46 @@ const CreateProfile = () => {
           postcode,
           bio,
           avatar: `users/${user.uid}/avatar`,
+          longitude: res.longitude,
+          latitude: res.latitude,
         });
+        console.log(profile, "<<< Profile");
       })
+      // .then(() => {
+      //   uploadImage(image);
+      // })
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
-  }
+  };
+
+  // set(ref(db, `users/${userType}/` + user.uid), {
+  //   firstname: firstName,
+  //   lastname: lastName,
+  //   userType,
+  //   postcode,
+  //   bio,
+  //   avatar: `users/${user.uid}/avatar`,
+  //   longitude: geoData.longitude,
+  //   latitude: geoData.latitude,
+  // })
+  //   .then(() => {
+  //     setProfile({
+  //       firstname: firstName,
+  //       lastname: lastName,
+  //       userType,
+  //       postcode,
+  //       bio,
+  //       avatar: `users/${user.uid}/avatar`,
+  //       longitude: geoData.longitude,
+  //       latitude: geoData.latitude,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     setError(err);
+  //   });
+  // };
 
   return (
     <SafeAreaView>

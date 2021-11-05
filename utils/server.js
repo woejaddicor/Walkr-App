@@ -1,8 +1,8 @@
 import axios from "axios";
 
-function geoFetch() {
+function geoFetch(postcode) {
   return axios
-    .get(`http://api.getthedata.com/postcode/SK42NX`)
+    .get(`http://api.getthedata.com/postcode/${postcode}`)
     .then((res) => {
       console.log(res.data.error, "<<<<");
       if (res.data.error) {
