@@ -15,60 +15,62 @@ import { Button } from "../components";
 const ListWalkers = ({ navigation }) => {
   const [walkers, setWalkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isCollapsed, setIsCollapsed] = useState(true);
   const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
     const users = ref(db, "users/walkers/");
     onValue(users, (snapshot) => {
       const data = snapshot.val();
-      const result = Object.values(data);
+      const result = Object.entries(data);
+      
+      const storage = getStorage();
+        
+        const getImages = result.map((user) => {
+          const pathReference = storeRef(storage, `users/${user[0]}/avatar`)
+          return getDownloadURL(storeRef(storage, pathReference))
+          .then((url) => {
+            user[1].httpUrl = url;
+          }) 
+        })
 
-      setWalkers(result);
-      setIsLoading(false);
+        return Promise.all(getImages).then(() => {
+          setIsLoading(false)
+          setWalkers(result)
+        })
     });
   }, []);
 
-  const storage = getStorage();
-  const pathReference = storeRef(storage, "users/8Uyll1qbJceuX8FBPKMNU5DOdOC2/avatar");
-
-  getDownloadURL(storeRef(storage, pathReference)).then((url) => {
-    setImageURL(url);
-  });
-
+  
   if (isLoading)
-    return (
-      <View>
+  return (
+    <View>
         <Text>Is loading</Text>
       </View>
     );
-
-  return (
-    <View style={styles.container}>
+    
+    
+    return (
+      <View style={styles.container}>
       <Text style={styles.title}>All Walkers in your area</Text>
       <View>
-        <Image
-          style={{ width: "100%", height: "50%" }}
-          source={{
-            uri: `${imageURL}`,
-          }}
-        />
         {walkers.map((walker) => {
+          console.log(walker);
+          
           return (
             <Collapse style={styles.card}>
               <CollapseHeader>
-                <Text>
-                  Full Name: {walker.firstname} {walker.lastname}
-                </Text>
-                <Text>Post Code: {walker.postcode}</Text>
+              <Image
+                style={{ width: 100, height: 70 }}
+                source={{
+                  uri: walker[1].httpUrl,
+                }}
+              />
+                <Text>{walker[1].firstname} {walker[1].lastname}</Text>
+                <Text>Post Code: {walker[1].postcode}</Text>
               </CollapseHeader>
               <CollapseBody>
-                <Text>Magic!!</Text>
-                <Text>Magic!!!</Text>
-                <Text>Magic!!</Text>
-                <Text>Magic!!</Text>
-                <Text>Magic!!</Text>
-                <Text>Magic!!</Text>
+                <Text>{walker[1].bio}</Text>
+                <Text>{walker[1].userType}</Text>
                 <Button
                   title={walker.firstname}
                   color="#841584"
