@@ -1,9 +1,7 @@
 import React from "react";
 import { View, Text, SafeAreaView, StyleSheet, IconButton } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "../screens/HomeScreen";
-import Profile from "../screens/Profile";
 import ListWalkersScreen from "../screens/ListWalkers";
 import MapViewScreen from "../screens/MapViewScreen";
 import BookingScreen from "../screens/BookingScreen";
@@ -15,9 +13,9 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import { getAuth } from "@firebase/auth";
-import LandingPage from "../screens/LandingPage";
 import Header from "../screens/Header";
 import CreateProfile from "../screens/CreateProfile";
+import ChatNav from "./ChatNav";
 
 const Drawer = createDrawerNavigator();
 
@@ -57,7 +55,7 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Walkers" component={ListWalkersScreen} />
         <Drawer.Screen name="Map View" component={MapViewScreen} />
         <Drawer.Screen name="Bookings" component={BookingScreen} />
-        <Drawer.Screen name="Chat" component={ChatScreen} />
+        <Drawer.Screen name="Chat" component={ChatNav} />
         <Drawer.Screen name="Support" component={SupportScreen} />
       </Drawer.Navigator>
     </>
