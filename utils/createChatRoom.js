@@ -4,7 +4,6 @@ import { ref, set, get } from "firebase/database";
 function createChatRoom(userid, recipientid) {
   const chatRef = ref(db, `chat/${userid}/mychats`);
   const recipientRef = ref(db, `chat/${recipientid}/mychats`);
-  recipientid = 'gupta'
   get(chatRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
