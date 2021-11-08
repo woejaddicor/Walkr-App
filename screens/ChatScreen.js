@@ -26,7 +26,9 @@ export default function ChatScreen() {
         chats.map((chat) => {
           return <Pressable key={chat[0]}>{chat[0]}</Pressable>;
         })}
-      <Button onPress={createChatRoom(user.uid, "newchatbub")}>Create Chat</Button>
+      <Button onPress={
+        () => {createChatRoom(user.uid, "newchatbud2")}
+        }>Create Chat</Button>
       <Text>Chat</Text>
     </View>
   );
