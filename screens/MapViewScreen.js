@@ -2,7 +2,7 @@ import MapView, { Marker, Callout } from "react-native-maps";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 import { ref, onValue } from "firebase/database";
-import db from '../config/Database'
+import db from "../config/Database";
 // import { Button } from "../components";
 
 const MapViewScreen = () => {
@@ -35,22 +35,47 @@ const MapViewScreen = () => {
   }, []);
 
   const demoWalkers = [
-    {firstname: "John",
-    lastname: "Walkington",
-    postcode: "M1 D0G",
-    userType: "walkers",
-    latitude: 53.4721,
-    longitude: -2.2382
-  },
-  {
-    firstname: 'Joe',
-    lastname: 'bloggs',
-    postcode: 'M1 D0G',
-    userType: 'walkers',
-    latitude: 53.478602,
-    longitude: -2.240280
-  }
-  ]
+    {
+      firstname: "John",
+      lastname: "Walkington",
+      postcode: "M1 D0G",
+      userType: "walkers",
+      latitude: 53.4721,
+      longitude: -2.2382,
+    },
+    {
+      firstname: "Joe",
+      lastname: "bloggs",
+      postcode: "M1 D0G",
+      userType: "walkers",
+      latitude: 53.478602,
+      longitude: -2.24028,
+    },
+    {
+      firstname: "demo",
+      lastname: "3",
+      postcode: "M1 D0G",
+      userType: "walkers",
+      latitude: 53.456032,
+      longitude: -2.014567,
+    },
+    {
+      firstname: "demo",
+      lastname: "4",
+      postcode: "M1 D0G",
+      userType: "walkers",
+      latitude: 53.4783,
+      longitude: -2.241234,
+    },
+    {
+      firstname: "demo",
+      lastname: "5",
+      postcode: "M1 D0G",
+      userType: "walkers",
+      latitude: 53.500132,
+      longitude: -2.10453,
+    },
+  ];
 
   if (isLoading)
     return (
@@ -68,24 +93,33 @@ const MapViewScreen = () => {
       region={region}
       onRegionChangeComplete={(region) => setRegion(region)}
     >
-      {demoWalkers.map((walker) => {
+      {walkers.map((walker) => {
         console.log(walker);
+        let latitude = Number.parseFloat(walker.latitude);
+        let longitude = Number.parseFloat(walker.longitude);
         return (
-        <Marker coordinate={{ latitude: walker.latitude ,longitude: walker.longitude }}>
-         <Callout style={styles.plainView}>
+          <Marker
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude,
+            }}
+          >
+            <Callout style={styles.plainView}>
               <View>
-                <Text>🐶{walker.firstname} {walker.lastname}</Text>
-                <Text>🐶Postcode: {walker.postcode}</Text>
-                <Text>🐶Bio: 28 year old dog walker based in Manchester city centre</Text>
-                <Button title="🐶Chat🐶">🐶🐶🐶🐶</Button>
+                <Text>
+                  {walker.firstname} {walker.lastname}
+                </Text>
+                <Text>Postcode: {walker.postcode}</Text>
+                <Text>Bio: 28 year old dog walker based in Manchester city centre</Text>
+                <Button title="🐶 Chat 🐶"></Button>
               </View>
-            </Callout> 
-        </Marker>
-        )
+            </Callout>
+          </Marker>
+        );
       })}
     </MapView>
   );
-}
+};
 
 export default MapViewScreen;
 
@@ -102,6 +136,6 @@ const styles = StyleSheet.create({
   },
   plainView: {
     width: 150,
-    height: 200
+    height: 200,
   },
 });
