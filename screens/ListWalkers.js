@@ -62,7 +62,7 @@ const ListWalkers = ({ navigation }) => {
             <Collapse style={styles.card}>
               <CollapseHeader>
               <Image
-                style={{ width: 160, height: 160, borderRadius: 10}}
+                style={{ width: 155, height: 155, borderRadius: 10, marginTop: 10}}
                 source={{
                   uri: walker[1].httpUrl,
                 }}
@@ -70,13 +70,14 @@ const ListWalkers = ({ navigation }) => {
                 <Text style={styles.name}>{walker[1].firstname} {walker[1].lastname}</Text>
               <Text style={styles.postcode}>{walker[1].hourlyRate}</Text>
                 <Text style={styles.postcode}>Post Code: {walker[1].postcode}</Text>
+                <Button accessibilityLabel="Show more" mode="contained" style={styles.moreButton}>Show More</Button>
               </CollapseHeader>
               <CollapseBody>
                 <Text style={styles.postcode}>{walker[1].userType}</Text>
                 <Text style={styles.bio}>{walker[1].bio}</Text>
                 <Button
                   accessibilityLabel="Chat with this walker"
-                  mode="contained" icon="message">Chat now!</Button>
+                  mode="contained" icon="message" color="#D1C6AD" style={styles.button}>Chat now!</Button>
               </CollapseBody>
             </Collapse>
           );
@@ -114,20 +115,39 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     textAlign: "center",
-    paddingTop: 10
+    paddingTop: 10,
+    fontWeight: "bold"
   },
   postcode: {
     textAlign: "center",
     paddingTop: 5,
     paddingBottom: 5,
-    fontSize: 15
+    fontSize: 15,
   },
   bio: {
     marginHorizontal: 20
   },
   button: {
-    alignItems: "center",
-    color: '#241909',
-    borderStyle: "solid"
+    marginTop: 20,
+    padding: 6,
+    marginBottom: 8,
+    width: 300,
+    marginLeft: 19,
+    borderColor: '#562526',
+    borderWidth: 3,
+    shadowOffset: {
+      width: -3,
+	    height: 2,
+    },
+    backgroundColor: '#D49B9C',
+  },
+  moreButton: {
+    borderColor: '#562526',
+    borderWidth: 3,
+    shadowOffset: {
+      width: -3,
+	    height: 2,
+    },
+    backgroundColor: '#D49B9C',
   }
 });
