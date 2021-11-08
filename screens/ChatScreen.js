@@ -16,7 +16,7 @@ export default function ChatScreen({ setChatListView, setChatRoom, chatRoom }) {
   const { profile, user } = useContext(AuthenticatedUserContext);
 
   useEffect(() => {
-    const chatRef = ref(db, `chat/${user.uid}/`);
+    const chatRef = ref(db, `chat/${user.uid}/mychats`);
     onValue(chatRef, (snapshot) => {
       if (snapshot.val()) {
         const data = Object.entries(snapshot.val());
