@@ -10,12 +10,13 @@ import {
   CollapseBody,
   AccordionList,
 } from "accordion-collapse-react-native";
-import { Button } from "../components";
+import { ScrollView } from "react-native-gesture-handler";
+import { Button } from 'react-native-paper';
+
 
 const ListWalkers = ({ navigation }) => {
   const [walkers, setWalkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
     const users = ref(db, "users/walkers/");
@@ -50,6 +51,7 @@ const ListWalkers = ({ navigation }) => {
     
     
     return (
+      <ScrollView>
       <View style={styles.container}>
       <Text style={styles.title}>All Walkers in your area</Text>
       <View>
@@ -60,28 +62,28 @@ const ListWalkers = ({ navigation }) => {
             <Collapse style={styles.card}>
               <CollapseHeader>
               <Image
-                style={{ width: 100, height: 70 }}
+                style={{ width: 160, height: 160, borderRadius: 10}}
                 source={{
                   uri: walker[1].httpUrl,
                 }}
               />
-                <Text>{walker[1].firstname} {walker[1].lastname}</Text>
-                <Text>Post Code: {walker[1].postcode}</Text>
+                <Text style={styles.name}>{walker[1].firstname} {walker[1].lastname}</Text>
+              <Text style={styles.postcode}>{walker[1].hourlyRate}</Text>
+                <Text style={styles.postcode}>Post Code: {walker[1].postcode}</Text>
               </CollapseHeader>
               <CollapseBody>
-                <Text>{walker[1].bio}</Text>
-                <Text>{walker[1].userType}</Text>
+                <Text style={styles.postcode}>{walker[1].userType}</Text>
+                <Text style={styles.bio}>{walker[1].bio}</Text>
                 <Button
-                  title={walker.firstname}
-                  color="#841584"
                   accessibilityLabel="Chat with this walker"
-                />
+                  mode="contained" icon="message">Chat now!</Button>
               </CollapseBody>
             </Collapse>
           );
         })}
       </View>
     </View>
+  </ScrollView>
   );
 };
 
@@ -89,6 +91,7 @@ export default ListWalkers;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#D1C6AD",
     flex: 1,
     padding: 24,
   },
@@ -96,15 +99,35 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   card: {
-    borderColor: "black",
+    borderColor: "#241909",
     borderStyle: "solid",
-    backgroundColor: "#FFA45E",
+    alignItems: "center",
+    backgroundColor: "#C16E70",
     borderWidth: 4,
-    borderRadius: 6,
+    borderRadius: 10,
     marginTop: 16,
     paddingVertical: 8,
     textAlign: "center",
-    fontSize: 30,
+    fontSize: 50,
     fontWeight: "bold",
   },
+  name: {
+    fontSize: 20,
+    textAlign: "center",
+    paddingTop: 10
+  },
+  postcode: {
+    textAlign: "center",
+    paddingTop: 5,
+    paddingBottom: 5,
+    fontSize: 15
+  },
+  bio: {
+    marginHorizontal: 20
+  },
+  button: {
+    alignItems: "center",
+    color: '#241909',
+    borderStyle: "solid"
+  }
 });
