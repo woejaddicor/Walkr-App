@@ -21,7 +21,7 @@ if (getApps().length === 0) {
   Firebase = initializeApp(firebaseConfig);
 } else {
   const getAppVar = getApp();
-  console.log(getAppVar)
+
 }
 
 export default Firebase;

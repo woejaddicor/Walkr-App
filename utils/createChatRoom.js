@@ -1,14 +1,14 @@
 import db from "../config/Database";
 import { ref, set, get } from "firebase/database";
 
-function createChatRoom(userid, recipientid) {
+function createChatRoom(userid, recipientid, username, recipientName) {
   const chatRef = ref(db, `chat/${userid}/mychats`);
   const recipientRef = ref(db, `chat/${recipientid}/mychats`);
   get(chatRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
         const chatRoomList = snapshot.val();
-        chatRoomList[recipientid] = userid + recipientid
+        chatRoomList[recipientName] = userid + recipientid;
         set(ref(db, `chat/${userid}`), {
           mychats: chatRoomList,
         });
@@ -16,7 +16,7 @@ function createChatRoom(userid, recipientid) {
         if (!snapshot.exists()) {
           set(ref(db, `chat/${userid}`), {
             mychats: {
-              [recipientid]: `${userid}${recipientid}`,
+              [recipientName]: `${userid}${recipientid}`,
             },
           });
         }
@@ -26,7 +26,7 @@ function createChatRoom(userid, recipientid) {
       get(recipientRef).then((snapshot) => {
         if (snapshot.exists()) {
           const chatRoomList = snapshot.val();
-          chatRoomList[userid] = userid + recipientid
+          chatRoomList[username] = userid + recipientid;
           set(ref(db, `chat/${recipientid}`), {
             mychats: chatRoomList,
           });
@@ -34,7 +34,7 @@ function createChatRoom(userid, recipientid) {
           if (!snapshot.exists()) {
             set(ref(db, `chat/${recipientid}/`), {
               mychats: {
-                [userid]: userid + recipientid,
+                [username]: userid + recipientid,
               },
             });
           }

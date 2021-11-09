@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import db from "../config/Database";
 import { ref, onValue } from "firebase/database";
@@ -11,47 +11,59 @@ import {
   AccordionList,
 } from "accordion-collapse-react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Button } from 'react-native-paper';
-
+import { Button } from "react-native-paper";
+import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
+import createChatRoom from "../utils/createChatRoom";
 
 const ListWalkers = ({ navigation }) => {
   const [walkers, setWalkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { user, profile, setChatRoom, setChatListView } = useContext(
+    AuthenticatedUserContext
+  );
 
   useEffect(() => {
     const users = ref(db, "users/walkers/");
     onValue(users, (snapshot) => {
       const data = snapshot.val();
       const result = Object.entries(data);
-      
-      const storage = getStorage();
-        
-        const getImages = result.map((user) => {
-          const pathReference = storeRef(storage, `users/${user[0]}/avatar`)
-          return getDownloadURL(storeRef(storage, pathReference))
-          .then((url) => {
-            user[1].httpUrl = url;
-          }) 
-        })
 
-        return Promise.all(getImages).then(() => {
-          setIsLoading(false)
-          setWalkers(result)
-        })
+      const storage = getStorage();
+
+      const getImages = result.map((user) => {
+        const pathReference = storeRef(storage, `users/${user[0]}/avatar`);
+        return getDownloadURL(storeRef(storage, pathReference)).then((url) => {
+          user[1].httpUrl = url;
+        });
+      });
+
+      return Promise.all(getImages).then(() => {
+        setIsLoading(false);
+        setWalkers(result);
+      });
     });
   }, []);
 
-  
+  const handleChatButton = (walkername, walkerid) => {
+    const res = createChatRoom(
+      user.uid,
+      walkerid,
+      profile.firstname,
+      walkername
+    );
+    setChatRoom([walkername, res]);
+    setChatListView(false);
+  };
+
   if (isLoading)
-  return (
-    <View>
+    return (
+      <View>
         <Text>Is loading</Text>
       </View>
     );
-    
-    
-    return (
-      <ScrollView>
+
+  return (
+    <ScrollView>
       <View style={styles.container}>
       <Image style={styles.logo} source={require('../Images/walkr.png')}/>
       <Text style={styles.title}>All Walkers in your area</Text>
@@ -77,15 +89,18 @@ const ListWalkers = ({ navigation }) => {
                 <Text style={styles.postcode}>{walker[1].userType}</Text>
                 <Text style={styles.bio}>{walker[1].bio}</Text>
                 <Button
+                  onPress={() => {
+                      handleChatButton(walker[1].firstname, walker[1].userid);
+                    }}
                   accessibilityLabel="Chat with this walker"
                   mode="contained" icon="message" color="#D1C6AD" style={styles.button}>Chat now!</Button>
               </CollapseBody>
             </Collapse>
           );
         })}
+
       </View>
-    </View>
-  </ScrollView>
+    </ScrollView>
   );
 };
 
@@ -122,6 +137,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontWeight: "bold",
     color: "#1C7C54"
+
   },
   postcode: {
     textAlign: "center",
@@ -132,7 +148,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   bio: {
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   button: {
     marginTop: 20,
@@ -140,21 +156,22 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     width: 300,
     marginLeft: 19,
-    borderColor: '#562526',
+    borderColor: "#562526",
     borderWidth: 3,
     shadowOffset: {
       width: -3,
-	    height: 2,
+      height: 2,
     },
-    backgroundColor: '#D49B9C',
+    backgroundColor: "#D49B9C",
   },
   moreButton: {
-    borderColor: '#562526',
+    borderColor: "#562526",
     borderWidth: 3,
     shadowOffset: {
       width: -3,
-	    height: 2,
+      height: 2,
     },
+
     backgroundColor: '#D49B9C',
   },
   logo: {
@@ -164,4 +181,8 @@ const styles = StyleSheet.create({
     marginLeft: 50,
     marginTop: -20
   }
+
+    backgroundColor: "#D49B9C",
+  },
+
 });

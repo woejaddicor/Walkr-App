@@ -1,16 +1,16 @@
 import React, { useState, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import ChatRoom from "../screens/ChatRoom";
-import ChatScreen from "../screens/ChatScreen";
 import { AuthenticatedUserContext } from "./AuthenticatedUserProvider";
+import MapViewScreen from "../screens/MapViewScreen";
+import ChatRoom from "../screens/ChatRoom";
 
-const ChatNav = () => {
+const MapNav = () => {
   const { chatListView } = useContext(AuthenticatedUserContext);
   return (
     <NavigationContainer independent={true}>
-      {chatListView ? <ChatScreen /> : <ChatRoom />}
+      {!chatListView ? <ChatRoom /> : <MapViewScreen />}
     </NavigationContainer>
   );
 };
 
-export default ChatNav;
+export default MapNav;
