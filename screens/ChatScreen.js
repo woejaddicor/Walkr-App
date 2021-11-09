@@ -44,12 +44,12 @@ export default function ChatScreen({ setChatListView, setChatRoom, chatRoom }) {
           );
         })}
       <Button
+        title="
+        Create Chat"
         onPress={() => {
           createChatRoom(user.uid, "Rick");
         }}
-      >
-        Create Chat
-      </Button>
+      ></Button>
       <Text>Chat</Text>
     </>
   );

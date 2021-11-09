@@ -97,6 +97,12 @@ const ChatRoom = ({ chatRoom, setChatRoom }) => {
         : null}
       <TextInput onChangeText={setNewMessage} value={newMessage} />
       <Button title="Send" onPress={handleSubmit} />
+      <Button
+        title="Go Back"
+        onPress={() => {
+          setChatListView(true);
+        }}
+      ></Button>
     </View>
   );
 };
