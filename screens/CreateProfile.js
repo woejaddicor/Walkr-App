@@ -19,6 +19,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { ScrollView } from "react-native-gesture-handler";
 
 import geoFetch from "../utils/server";
+import { shadow } from "react-native-paper";
 
 const CreateProfile = () => {
   const { user, setUser, profile, setProfile } = useContext(
@@ -103,7 +104,6 @@ const CreateProfile = () => {
   const userSelect = ["Walker", "Owner"];
 
   return (
-    <SafeAreaView>
       <ScrollView>
       <View style={styles.container}>
       <Image style={styles.logo} source={require('../Images/walkr.png')}/>
@@ -155,7 +155,7 @@ const CreateProfile = () => {
             multiline={true}
           />
         ) : null}
-        <ImagePickerUtil style={image}
+        <ImagePickerUtil
           setImage={setImage}
           image={image}
         />
@@ -163,36 +163,36 @@ const CreateProfile = () => {
         <Pressable
           style={
             !postcode || !lastName || !firstName || !image || !isOwner
-              ? styles.disabledButton
-              : styles.submitButton
+            ? styles.disabledButton
+            : styles.submitButton
           }
           onPress={handleButton}
           disabled={!postcode || !lastName || !firstName || !image || !isOwner}
-        >
+          >
           <Text style={styles.submitButtonText}>Submit Profile</Text>
         </Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
         {success && <Text>Profile successfully updated!</Text>}
       </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    flex: 1,
     justifyContent: "center",
     backgroundColor: "#D1C6AD",
-    flexWrap: "wrap",
     width: "100%",
+    paddingBottom: 30
   },
   inputTop: {
     backgroundColor: "white",
     padding: 10,
     marginTop: 0,
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     borderColor: '#b2d2b6',
     borderWidth: 2,
     width: "80%",
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 10,
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginTop: 0,
     borderColor: '#b2d2b6',
     borderWidth: 2,
@@ -213,29 +213,26 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     marginTop: 0,
-    borderRadius: 5,
+    borderRadius: 10,
     borderColor: '#b2d2b6',
     borderWidth: 2,
     width: "80%", 
   },
-  submitButton: {
-    width: "20%",
-    margin: 10,
-    borderRadius: 5,
-    backgroundColor: "#D1C6AD",
-    textAlign: "center",
-    padding: 10,
-  },
   submitButtonText: {
+    color: 'white',
+    fontWeight: '400',
     fontSize: 20,
   },
   disabledButton: {
-    width: "80%",
+    width: 150,
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderColor: '#b2d2b6',
+    borderWidth: 3,
     backgroundColor: "#1c7c54",
     textAlign: "center",
     padding: 10,
+    marginTop: 15
   },
   switch: {
     flex: 1,
@@ -262,13 +259,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#b2d2b6',
     height: 40,
-    width: 175
+    width: 200,
+    borderColor: "#1C7C54",
+    borderWidth: 2
   },
   dropdownText: {
     color: '#1C7C54',
+    fontWeight: '700'
   },
-  image: {
-    borderRadius: 5
+  imageSelectButton: {
+    backgroundColor: 'red'
   }
 });
 

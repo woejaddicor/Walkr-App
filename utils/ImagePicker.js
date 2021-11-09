@@ -47,7 +47,7 @@ export default function ImagePickerUtil({ image, setImage }) {
       {image && (
         <Image
           source={{ uri: image }}
-          style={{ width: 200, height: 200, alignContent: "center" }}
+          style={{ width: 175, height: 175, alignContent: "center" }}
         />
       )}
     </View>
@@ -55,13 +55,14 @@ export default function ImagePickerUtil({ image, setImage }) {
 }
 const styles = StyleSheet.create({
   imagePicker: {
-    width: "80%",
-    fontSize: 25,
     margin: 10,
-    padding: 10,
-    borderRadius: 25,
-    backgroundColor: "gray",
+    borderRadius: 10,
+    borderColor: '#b2d2b6',
+    borderWidth: 3,
+    backgroundColor: "#1c7c54",
     textAlign: "center",
+    padding: 10,
+    marginBottom: 15
   },
   container: {
     width: "100%",
@@ -69,5 +70,6 @@ const styles = StyleSheet.create({
   },
   imageButtonText: {
     fontSize: 20,
+    color: "white"
   },
 });

@@ -53,7 +53,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.row}>
             <Text style={styles.title}>Welcome {user.email}!</Text>
           </View>
-          <Text style={styles.aboutWalkr}>Walkr was created to unite dog lovers with those who's canine pals are in need of some daily love. By using this app you can find the perfect human companion for your dog.</Text>
+          <Text style={styles.aboutWalkr}>"Walkr was created to unite dog lovers with those who's canine pals are in need of some daily love. By using this app you can find the perfect human companion for your dog."</Text>
         </View>
       )}
     </>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     textAlign: "center",
     marginRight: 20,
-    marginTop: 100,
+    marginTop: 50,
     fontStyle: "italic"
   }
 });
