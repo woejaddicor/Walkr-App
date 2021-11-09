@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "lightgray",
+    backgroundColor: "#D1C6AD",
     flexWrap: "wrap",
     width: "100%",
   },
@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
   submitButton: {
     width: "80%",
     margin: 10,
-    borderRadius: 25,
-    backgroundColor: "gray",
+    borderRadius: 5,
+    backgroundColor: "#D1C6AD",
     textAlign: "center",
     padding: 10,
   },
@@ -205,8 +205,8 @@ const styles = StyleSheet.create({
   disabledButton: {
     width: "80%",
     margin: 10,
-    borderRadius: 25,
-    backgroundColor: "blue",
+    borderRadius: 5,
+    backgroundColor: "#1C7C54",
     textAlign: "center",
     padding: 10,
   },

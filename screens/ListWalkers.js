@@ -53,6 +53,7 @@ const ListWalkers = ({ navigation }) => {
     return (
       <ScrollView>
       <View style={styles.container}>
+      <Image style={styles.logo} source={require('../Images/walkr.png')}/>
       <Text style={styles.title}>All Walkers in your area</Text>
       <View>
         {walkers.map((walker) => {
@@ -94,17 +95,20 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#D1C6AD",
     flex: 1,
-    padding: 24,
+    padding: 25,
   },
   title: {
     fontSize: 30,
+    color: "#1C7C54",
+    fontWeight: '500',
+    textAlign: "center"
   },
   card: {
-    borderColor: "#241909",
+    borderColor: "#DAE7DD",
     borderStyle: "solid",
     alignItems: "center",
-    backgroundColor: "#C16E70",
-    borderWidth: 4,
+    backgroundColor: "#B2D2B6",
+    borderWidth: 2,
     borderRadius: 10,
     marginTop: 16,
     paddingVertical: 8,
@@ -116,12 +120,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     paddingTop: 10,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#1C7C54"
   },
   postcode: {
     textAlign: "center",
     paddingTop: 5,
     paddingBottom: 5,
+    color: "#1C7C54",
+    fontWeight: '600',
     fontSize: 15,
   },
   bio: {
@@ -149,5 +156,12 @@ const styles = StyleSheet.create({
 	    height: 2,
     },
     backgroundColor: '#D49B9C',
+  },
+  logo: {
+    height: 100,
+    width: 250,
+    alignItems: "center",
+    marginLeft: 50,
+    marginTop: -20
   }
 });

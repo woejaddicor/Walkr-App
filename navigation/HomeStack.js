@@ -16,6 +16,7 @@ import { getAuth } from "@firebase/auth";
 import Header from "../screens/Header";
 import CreateProfile from "../screens/CreateProfile";
 import ChatNav from "./ChatNav";
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const Drawer = createDrawerNavigator();
 
@@ -45,7 +46,7 @@ function CustomDrawerContent(props) {
 export default function HomeStack({ navigation }) {
   return (
     <>
-      {/* <Header/> */}
+      {/* <Header style={styles.header}/> */}
       <Drawer.Navigator
         initialRouteName="HomeScreen"
         screenOptions={{
@@ -56,13 +57,83 @@ export default function HomeStack({ navigation }) {
         }}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Profile" component={CreateProfile} />
-        <Drawer.Screen name="Walkers" component={ListWalkersScreen} />
-        <Drawer.Screen name="Map View" component={MapViewScreen} />
-        <Drawer.Screen name="Bookings" component={BookingScreen} />
-        <Drawer.Screen name="Chat" component={ChatNav} />
-        <Drawer.Screen name="Support" component={SupportScreen} />
+        <Drawer.Screen name="Home" component={HomeScreen} 
+        options={{
+          title: 'Home',
+          drawerIcon: ({focused, size}) => (
+             <Ionicons
+                name="md-home"
+                size={size}
+                color={'#1C7C54'}
+             />
+          ),
+       }}/>
+        <Drawer.Screen name="Profile" component={CreateProfile}
+        options={{
+          title: 'Profile',
+          drawerIcon: ({focused, size}) => (
+             <Ionicons
+                name="person-outline"
+                size={size}
+                color={'#1C7C54'}
+             />
+          ),
+        }}/>
+        <Drawer.Screen name="Walkers" component={ListWalkersScreen} 
+        options={{
+          title: 'Walkers',
+          drawerIcon: ({focused, size}) => (
+             <Ionicons
+                name="walk"
+                size={size}
+                color={'#1C7C54'}
+             />
+          ),
+        }}/>
+        <Drawer.Screen name="Map View" component={MapViewScreen} 
+        options={{
+          title: 'Map View',
+          drawerIcon: ({focused, size}) => (
+             <Ionicons
+                name="map"
+                size={size}
+                color={'#1C7C54'}
+             />
+          ),
+        }}/>
+        <Drawer.Screen name="Bookings" component={BookingScreen} 
+        options={{
+          title: 'Bookings',
+          drawerIcon: ({focused, size}) => (
+             <Ionicons
+                name="card"
+                size={size}
+                color={'#1C7C54'}
+             />
+          ),
+        }}/>
+        <Drawer.Screen name="Chat" component={ChatNav} 
+        options={{
+          title: 'Chat',
+          drawerIcon: ({focused, size}) => (
+             <Ionicons
+                name="chatbox-ellipses-outline"
+                size={size}
+                color={'#1C7C54'}
+             />
+          ),
+        }}/>
+        <Drawer.Screen name="Support" component={SupportScreen} 
+        options={{
+          title: 'Support',
+          drawerIcon: ({focused, size}) => (
+             <Ionicons
+                name="settings-outline"
+                size={size}
+                color={'#1C7C54'}
+             />
+          ),
+        }}/>
       </Drawer.Navigator>
     </>
   );
@@ -72,7 +143,4 @@ const styles = StyleSheet.create({
   drawList: {
     backgroundColor: "#1C7C54"
   },
-  header: {
-    backgroundColor: "#B2D2B6"
-  }
 })
