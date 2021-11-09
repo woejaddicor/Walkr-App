@@ -7,7 +7,6 @@ function geoFetch(postcode) {
       if (res.data.error) {
         return "Invalid";
       } else {
-        console.log(res.data.data);
         return {
           longitude: res.data.data.longitude,
           latitude: res.data.data.latitude,
