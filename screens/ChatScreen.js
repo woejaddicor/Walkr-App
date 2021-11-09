@@ -10,10 +10,13 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Drawer = createDrawerNavigator();
 
-export default function ChatScreen({ setChatListView, setChatRoom, chatRoom }) {
+export default function ChatScreen() {
   const navigation = useNavigation();
   const [chats, setChats] = useState();
-  const { profile, user } = useContext(AuthenticatedUserContext);
+  const { user } = useContext(AuthenticatedUserContext);
+  const { setChatListView, chatRoom, setChatRoom } = useContext(
+    AuthenticatedUserContext
+  );
 
   useEffect(() => {
     const chatRef = ref(db, `chat/${user.uid}/mychats`);
@@ -35,6 +38,7 @@ export default function ChatScreen({ setChatListView, setChatRoom, chatRoom }) {
               onPress={async () => {
                 await setChatListView(false);
                 await setChatRoom(chat);
+                console.log(chat, "<<<<");
 
                 navigation.navigate("ChatRoom", { screen: "ChatRoom" });
               }}

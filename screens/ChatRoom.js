@@ -4,10 +4,10 @@ import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvide
 import db from "../config/Database";
 import { ref, set, get, serverTimestamp, push } from "firebase/database";
 
-const ChatRoom = ({ chatRoom, setChatRoom }) => {
+const ChatRoom = () => {
   const [messageHistory, setMessageHistory] = useState();
   const [newMessage, setNewMessage] = useState();
-  const { user, setUser, profile, setProfile } = useContext(
+  const { user, profile, chatRoom, setChatListView } = useContext(
     AuthenticatedUserContext
   );
 
@@ -17,13 +17,11 @@ const ChatRoom = ({ chatRoom, setChatRoom }) => {
       get(messageRef, chatRoom)
         .then((snapshot) => {
           if (!snapshot.exists()) {
-            set(ref(db, `chatrooms/`), {
-              [chatRoom[1]]: {
-                "--key": {
-                  user: profile.firstname,
-                  message: "Lets start chatting",
-                  timestamp: serverTimestamp(),
-                },
+            set(ref(db, `chatrooms/${chatRoom[1]}`), {
+              "--key": {
+                user: profile.firstname,
+                message: "Lets start chatting",
+                timestamp: serverTimestamp(),
               },
             });
           }
@@ -96,7 +94,11 @@ const ChatRoom = ({ chatRoom, setChatRoom }) => {
           })
         : null}
       <TextInput onChangeText={setNewMessage} value={newMessage} />
-      <Button title="Send" onPress={handleSubmit} />
+      <Button
+        title="Send"
+        onPress={handleSubmit}
+        disabled={!newMessage || newMessage === ""}
+      />
       <Button
         title="Go Back"
         onPress={() => {

@@ -57,6 +57,7 @@ const CreateProfile = () => {
           avatar: `users/${user.uid}/avatar`,
           longitude: res.longitude,
           latitude: res.latitude,
+          userid: user.uid,
         });
         return res;
       })
