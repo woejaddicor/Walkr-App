@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 export default function Header() {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Header</Text>
     </View>
   );

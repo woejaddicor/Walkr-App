@@ -65,58 +65,40 @@ const ListWalkers = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>All Walkers in your area</Text>
-        <View>
-          {walkers.map((walker) => {
-            return (
-              <Collapse style={styles.card}>
-                <CollapseHeader>
-                  <Image
-                    style={{
-                      width: 155,
-                      height: 155,
-                      borderRadius: 10,
-                      marginTop: 10,
-                    }}
-                    source={{
-                      uri: walker[1].httpUrl,
-                    }}
-                  />
-                  <Text style={styles.name}>
-                    {walker[1].firstname} {walker[1].lastname}
-                  </Text>
-                  <Text style={styles.postcode}>{walker[1].hourlyRate}</Text>
-                  <Text style={styles.postcode}>
-                    Post Code: {walker[1].postcode}
-                  </Text>
-                  <Button
-                    accessibilityLabel="Show more"
-                    mode="contained"
-                    style={styles.moreButton}
-                  >
-                    Show More
-                  </Button>
-                </CollapseHeader>
-                <CollapseBody>
-                  <Text style={styles.postcode}>{walker[1].userType}</Text>
-                  <Text style={styles.bio}>{walker[1].bio}</Text>
-                  <Button
-                    onPress={() => {
+      <Image style={styles.logo} source={require('../Images/walkr.png')}/>
+      <Text style={styles.title}>All Walkers in your area</Text>
+      <View>
+        {walkers.map((walker) => {
+          console.log(walker);
+          
+          return (
+            <Collapse style={styles.card}>
+              <CollapseHeader>
+              <Image
+                style={{ width: 155, height: 155, borderRadius: 10, marginTop: 10}}
+                source={{
+                  uri: walker[1].httpUrl,
+                }}
+              />
+                <Text style={styles.name}>{walker[1].firstname} {walker[1].lastname}</Text>
+              <Text style={styles.postcode}>{walker[1].hourlyRate}</Text>
+                <Text style={styles.postcode}>Post Code: {walker[1].postcode}</Text>
+                <Button accessibilityLabel="Show more" mode="contained" style={styles.moreButton}>Show More</Button>
+              </CollapseHeader>
+              <CollapseBody>
+                <Text style={styles.postcode}>{walker[1].userType}</Text>
+                <Text style={styles.bio}>{walker[1].bio}</Text>
+                <Button
+                  onPress={() => {
                       handleChatButton(walker[1].firstname, walker[1].userid);
                     }}
-                    accessibilityLabel="Chat with this walker"
-                    mode="contained"
-                    icon="message"
-                    color="#D1C6AD"
-                    style={styles.button}
-                  >
-                    Chat now!
-                  </Button>
-                </CollapseBody>
-              </Collapse>
-            );
-          })}
-        </View>
+                  accessibilityLabel="Chat with this walker"
+                  mode="contained" icon="message" color="#D1C6AD" style={styles.button}>Chat now!</Button>
+              </CollapseBody>
+            </Collapse>
+          );
+        })}
+
       </View>
     </ScrollView>
   );
@@ -128,17 +110,20 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#D1C6AD",
     flex: 1,
-    padding: 24,
+    padding: 25,
   },
   title: {
     fontSize: 30,
+    color: "#1C7C54",
+    fontWeight: '500',
+    textAlign: "center"
   },
   card: {
-    borderColor: "#241909",
+    borderColor: "#DAE7DD",
     borderStyle: "solid",
     alignItems: "center",
-    backgroundColor: "#C16E70",
-    borderWidth: 4,
+    backgroundColor: "#B2D2B6",
+    borderWidth: 2,
     borderRadius: 10,
     marginTop: 16,
     paddingVertical: 8,
@@ -151,11 +136,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingTop: 10,
     fontWeight: "bold",
+    color: "#1C7C54"
+
   },
   postcode: {
     textAlign: "center",
     paddingTop: 5,
     paddingBottom: 5,
+    color: "#1C7C54",
+    fontWeight: '600',
     fontSize: 15,
   },
   bio: {
@@ -182,6 +171,18 @@ const styles = StyleSheet.create({
       width: -3,
       height: 2,
     },
+
+    backgroundColor: '#D49B9C',
+  },
+  logo: {
+    height: 100,
+    width: 250,
+    alignItems: "center",
+    marginLeft: 50,
+    marginTop: -20
+  }
+
     backgroundColor: "#D49B9C",
   },
+
 });

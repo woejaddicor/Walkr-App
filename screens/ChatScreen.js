@@ -48,7 +48,9 @@ export default function ChatScreen() {
           );
         })}
 
+
     </View>
+
   );
 }
 

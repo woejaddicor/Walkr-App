@@ -10,12 +10,15 @@ import {
   View,
   Pressable,
   SafeAreaView,
+  Image,
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
 import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
 import SelectDropdown from "react-native-select-dropdown";
+import { ScrollView } from "react-native-gesture-handler";
 
 import geoFetch from "../utils/server";
+import { shadow } from "react-native-paper";
 
 const CreateProfile = () => {
   const { user, setProfile } = useContext(
@@ -105,15 +108,18 @@ const CreateProfile = () => {
   const userSelect = ["Walker", "Owner"];
 
   return (
-    <SafeAreaView>
+      <ScrollView>
       <View style={styles.container}>
-        <Text>User Input</Text>
+      <Image style={styles.logo} source={require('../Images/walkr.png')}/>
+        <Text style={styles.title}>Create your profile!</Text>
 
         <View style={styles.switch}>
           <SelectDropdown
             data={userSelect}
+            buttonStyle={styles.dropdown}
+            buttonTextStyle={styles.dropdownText}
             onSelect={(selectedItem, index) => {
-              setIsOwner(selectedItem);
+              setIsOwner(selectedItem)
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem;
@@ -122,10 +128,11 @@ const CreateProfile = () => {
               return item;
             }}
           />
+
         </View>
         <TextInput
           title="firstname"
-          style={styles.input}
+          style={styles.inputTop}
           onChangeText={onChangeFirstName}
           value={firstName}
           placeholder="First name"
@@ -145,11 +152,11 @@ const CreateProfile = () => {
         {isOwner === "Walker" ? (
           <>
           <TextInput
-            style={styles.input}
+            style={styles.bioInput}
             onChangeText={onChangeBio}
             value={bio}
             placeholder="Bio"
-            numberOfLines={5}
+            numberOfLines={20}
             multiline={true}
           />
           <TextInput 
@@ -163,67 +170,118 @@ const CreateProfile = () => {
         <ImagePickerUtil
           setImage={setImage}
           image={image}
-          style={styles.submitButton}
         />
 
         <Pressable
           style={
             !postcode || !lastName || !firstName || !image || !isOwner
-              ? styles.disabledButton
-              : styles.submitButton
+            ? styles.disabledButton
+            : styles.submitButton
           }
           onPress={handleButton}
           disabled={!postcode || !lastName || !firstName || !image || !isOwner}
-        >
+          >
           <Text style={styles.submitButtonText}>Submit Profile</Text>
         </Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
         {success && <Text>Profile successfully updated!</Text>}
       </View>
-    </SafeAreaView>
+      </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    flex: 1,
     justifyContent: "center",
-    backgroundColor: "lightgray",
-    flexWrap: "wrap",
+    backgroundColor: "#D1C6AD",
     width: "100%",
+    paddingBottom: 200
+  },
+  inputTop: {
+    backgroundColor: "white",
+    padding: 10,
+    marginTop: 0,
+    margin: 10,
+    borderRadius: 10,
+    borderColor: '#b2d2b6',
+    borderWidth: 2,
+    width: "80%",
   },
   input: {
     backgroundColor: "white",
     padding: 10,
     margin: 10,
-    borderRadius: 25,
+    borderRadius: 10,
+    marginTop: 0,
+    borderColor: '#b2d2b6',
+    borderWidth: 2,
     width: "80%",
   },
-  submitButton: {
-    width: "80%",
-    margin: 10,
-    borderRadius: 25,
-    backgroundColor: "gray",
-    textAlign: "center",
+  bioInput: {
+    minHeight: 150,
+    backgroundColor: 'white',
     padding: 10,
+    margin: 10,
+    marginTop: 0,
+    borderRadius: 10,
+    borderColor: '#b2d2b6',
+    borderWidth: 2,
+    width: "80%", 
   },
   submitButtonText: {
+    color: 'white',
+    fontWeight: '400',
     fontSize: 20,
   },
   disabledButton: {
-    width: "80%",
+    width: 150,
     margin: 10,
-    borderRadius: 25,
-    backgroundColor: "blue",
+    borderRadius: 10,
+    borderColor: '#b2d2b6',
+    borderWidth: 3,
+    backgroundColor: "#1c7c54",
     textAlign: "center",
     padding: 10,
+    marginTop: 15
   },
   switch: {
     flex: 1,
     flexDirection: "row",
-    height: 50,
+    height: 30,
     marginBottom: 40,
   },
+  logo: {
+    height: 200,
+    width: 360,
+    alignItems: "center",
+    marginTop: -10,
+    marginBottom: -20
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#1C7C54",
+    alignSelf: "center",
+    marginTop: -15,
+    paddingBottom: 20,
+  },
+  dropdown: {
+    borderRadius: 5,
+    backgroundColor: '#b2d2b6',
+    height: 40,
+    width: 200,
+    borderColor: "#1C7C54",
+    borderWidth: 2
+  },
+  dropdownText: {
+    color: '#1C7C54',
+    fontWeight: '700'
+  },
+  imageSelectButton: {
+    backgroundColor: 'red'
+  }
 });
 
 export default CreateProfile;

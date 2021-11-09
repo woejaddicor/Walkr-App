@@ -1,7 +1,7 @@
 import { getAuth } from "@firebase/auth";
 import { StatusBar } from "expo-status-bar";
 import React, { useContext, useEffect } from "react";
-import { StyleSheet, Text, View, Button, RNButton } from "react-native";
+import { StyleSheet, Text, View, Button, RNButton, Image } from "react-native";
 
 import { IconButton } from "../components";
 import db from "../config/Database";
@@ -48,17 +48,12 @@ export default function HomeScreen({ navigation }) {
         <CreateProfile />
       ) : (
         <View style={styles.container}>
+          <Image style={styles.logo} source={require('../Images/walkr.png')}/>
           <StatusBar style="dark-content" />
           <View style={styles.row}>
             <Text style={styles.title}>Welcome {user.email}!</Text>
-            <IconButton
-              name="logout"
-              size={24}
-              color="#fff"
-              onPress={handleSignOut}
-            />
           </View>
-          <Text style={styles.text}>Your UID is: {user.uid} </Text>
+          <Text style={styles.aboutWalkr}>"Walkr was created to unite dog lovers with those who's canine pals are in need of some daily love. By using this app you can find the perfect human companion for your dog."</Text>
         </View>
       )}
     </>
@@ -68,7 +63,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e93b81",
+    backgroundColor: "#D1C6AD",
     paddingTop: 50,
     paddingHorizontal: 12,
   },
@@ -81,11 +76,31 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "600",
-    color: "#fff",
+    textAlign: "center",
+    marginLeft: 35,
+    color: "#1C7C54",
   },
   text: {
     fontSize: 16,
     fontWeight: "normal",
-    color: "#fff",
+    textAlign: "center",
+    marginRight: 8,
+    color: "#1C7C54",
   },
+  logo: {
+    height: 200,
+    width: 360,
+    alignItems: "center",
+    marginBottom: -20,
+    marginTop: -50
+  },
+  aboutWalkr: {
+    color:"#1C7C54",
+    fontSize: 16,
+    fontWeight: '400',
+    textAlign: "center",
+    marginRight: 20,
+    marginTop: 50,
+    fontStyle: "italic"
+  }
 });

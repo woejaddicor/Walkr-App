@@ -2,7 +2,7 @@ import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { useState } from "react";
-import { StyleSheet, Text, View, Button as RNButton } from "react-native";
+import { StyleSheet, Text, View, Button as RNButton, Image } from "react-native";
 
 import { Button, InputField, ErrorMessage } from "../components";
 import Firebase from "../config/Firebase";
@@ -38,6 +38,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.logo} source={require('../Images/walkr.png')}/>
       <StatusBar style="dark-content" />
       <Text style={styles.title}>Login</Text>
       <InputField
@@ -79,7 +80,7 @@ export default function LoginScreen({ navigation }) {
       {loginError ? <ErrorMessage error={loginError} visible={true} /> : null}
       <Button
         onPress={onLogin}
-        backgroundColor="#f57c00"
+        backgroundColor="#1C7C54"
         title="Login"
         tileColor="#fff"
         titleSize={20}
@@ -90,7 +91,8 @@ export default function LoginScreen({ navigation }) {
       <RNButton
         onPress={() => navigation.navigate("Signup")}
         title="Go to Signup"
-        color="#fff"
+        color="#1C7C54"
+        style={styles.title}
       />
     </View>
   );
@@ -99,15 +101,21 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e93b81",
+    backgroundColor: "#D1C6AD",
     paddingTop: 50,
     paddingHorizontal: 12,
   },
   title: {
     fontSize: 24,
     fontWeight: "600",
-    color: "#fff",
+    color: "#1C7C54",
     alignSelf: "center",
     paddingBottom: 24,
   },
+  logo: {
+    height: 200,
+    width: 360,
+    alignItems: "center",
+    marginBottom: -20
+  }
 });
