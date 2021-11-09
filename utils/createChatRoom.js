@@ -1,45 +1,41 @@
 import db from "../config/Database";
 import { ref, set, get } from "firebase/database";
 
-async function createChatRoom(userid, recipientid) {
-  const chatRef = ref(db, `chat/${userid}`);
-  const recipientRef = ref(db, `chat/${recipientid}`);
-  get(chatRef, userid)
+function createChatRoom(userid, recipientid) {
+  const chatRef = ref(db, `chat/${userid}/mychats`);
+  const recipientRef = ref(db, `chat/${recipientid}/mychats`);
+  get(chatRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
         const chatRoomList = snapshot.val();
-        const newChatRoomList = {
-          ...chatRoomList,
-          [recipientid]: userid + recipientid,
-        };
-        console.log(newChatRoomList);
-        set(ref(db, `chat/`), {
-          [userid]: newChatRoomList,
+        chatRoomList[recipientid] = userid + recipientid
+        set(ref(db, `chat/${userid}`), {
+          mychats: chatRoomList,
         });
       } else {
         if (!snapshot.exists()) {
-          set(ref(db, `chat/${userid}/`), {
-            [recipientid]: userid + recipientid,
+          set(ref(db, `chat/${userid}`), {
+            mychats: {
+              [recipientid]: `${userid}${recipientid}`,
+            },
           });
         }
       }
     })
     .then(() => {
-      get(recipientRef, recipientid).then((snapshot) => {
+      get(recipientRef).then((snapshot) => {
         if (snapshot.exists()) {
           const chatRoomList = snapshot.val();
-          const newChatRoomList = {
-            ...chatRoomList,
-            [userid]: userid + recipientid,
-          };
-          console.log(newChatRoomList);
-          set(ref(db, `chat/`), {
-            [recipientid]: newChatRoomList,
+          chatRoomList[userid] = userid + recipientid
+          set(ref(db, `chat/${recipientid}`), {
+            mychats: chatRoomList,
           });
         } else {
           if (!snapshot.exists()) {
             set(ref(db, `chat/${recipientid}/`), {
-              [userid]: userid + recipientid,
+              mychats: {
+                [userid]: userid + recipientid,
+              },
             });
           }
         }
