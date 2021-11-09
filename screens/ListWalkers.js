@@ -100,6 +100,7 @@ const ListWalkers = ({ navigation }) => {
         })}
 
       </View>
+      </View>
     </ScrollView>
   );
 };
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
       width: -3,
       height: 2,
     },
-
     backgroundColor: '#D49B9C',
   },
   logo: {
@@ -182,7 +182,4 @@ const styles = StyleSheet.create({
     marginTop: -20
   }
 
-    backgroundColor: "#D49B9C",
-  },
-
-});
+  })

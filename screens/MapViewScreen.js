@@ -19,11 +19,6 @@ const MapViewScreen = () => {
     AuthenticatedUserContext
   );
 
-  const { user, profile, setChatRoom, setChatListView } = useContext(
-    AuthenticatedUserContext
-  );
-
-
   useEffect(() => {
     const users = ref(db, "users/walkers/");
     onValue(users, (snapshot) => {
@@ -94,17 +89,6 @@ const MapViewScreen = () => {
     },
   ];
 
-  const handleChatButton = (walkername, walkerid) => {
-    const res = createChatRoom(
-      user.uid,
-      walkerid,
-      profile.firstname,
-      walkername
-    );
-
-    setChatRoom([walkername, res]);
-    setChatListView(false);
-  };
 
   if (isLoading)
     return (

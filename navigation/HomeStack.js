@@ -1,5 +1,5 @@
 import React from "react";
-import {Text} from "react-native";
+import {Text, StyleSheet} from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "../screens/HomeScreen";
 import BookingScreen from "../screens/BookingScreen";
@@ -18,6 +18,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import WalkersNav from "./WalkersNav";
 import MapNav from "./Mapnav";
+
+import ListWalkers from "../screens/ListWalkers";
+import MapViewScreen from "../screens/MapViewScreen";
 
 
 const Drawer = createDrawerNavigator();
@@ -100,7 +103,7 @@ export default function HomeStack({ navigation }) {
              />
           ),
         }}/>
-        <Drawer.Screen name="Walkers" component={ListWalkersScreen} 
+        <Drawer.Screen name="Walkers" component={ListWalkers} 
         options={{
           title: 'Walkers',
           headerStyle: {
