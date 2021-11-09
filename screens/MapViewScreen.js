@@ -1,9 +1,16 @@
 import MapView, { Marker, Callout } from "react-native-maps";
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Button,
+  Pressable,
+} from "react-native";
 import { ref, onValue } from "firebase/database";
 import db from "../config/Database";
-// import { Button } from "../components";
+import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 
 const MapViewScreen = () => {
   const [region, setRegion] = useState({
@@ -14,15 +21,16 @@ const MapViewScreen = () => {
   });
   const [walkers, setWalkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { user, profile, setChatRoom, setChatListView } = useContext(
+    AuthenticatedUserContext
+  );
 
   useEffect(() => {
     const users = ref(db, "users/walkers/");
     onValue(users, (snapshot) => {
       const data = snapshot.val();
       const userIds = Object.keys(data);
-      // console.log(data, "<===data");
       const result = Object.values(data);
-      console.log(result, "<==result");
 
       const newArr = [];
       const userArr = userIds.map((id) => {
@@ -77,6 +85,18 @@ const MapViewScreen = () => {
     },
   ];
 
+  const handleChatButton = (walkername, walkerid) => {
+    const res = createChatRoom(
+      user.uid,
+      walkerid,
+      profile.firstname,
+      walkername
+    );
+
+    setChatRoom([walkername, res]);
+    setChatListView(false);
+  };
+
   if (isLoading)
     return (
       <View>
@@ -94,7 +114,6 @@ const MapViewScreen = () => {
       onRegionChangeComplete={(region) => setRegion(region)}
     >
       {walkers.map((walker) => {
-        console.log(walker);
         let latitude = Number.parseFloat(walker.latitude);
         let longitude = Number.parseFloat(walker.longitude);
         return (
@@ -110,8 +129,17 @@ const MapViewScreen = () => {
                   {walker.firstname} {walker.lastname}
                 </Text>
                 <Text>Postcode: {walker.postcode}</Text>
-                <Text>Bio: 28 year old dog walker based in Manchester city centre</Text>
-                <Button title="🐶 Chat 🐶"></Button>
+                <Text>
+                  Bio: 28 year old dog walker based in Manchester city centre
+                </Text>
+                <Button
+                  title="Chat🐕"
+                  onPress={() => {
+                    console.log("Inside Pressable");
+                  }}
+                >
+                  Chat🐕
+                </Button>
               </View>
             </Callout>
           </Marker>
