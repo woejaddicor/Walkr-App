@@ -39,17 +39,10 @@ export default function ChatScreen({ setChatListView, setChatRoom, chatRoom }) {
                 navigation.navigate("ChatRoom", { screen: "ChatRoom" });
               }}
             >
-              {chat[0]}
+              <Text>{chat[0]}</Text>
             </Pressable>
           );
         })}
-      <Button
-        title="
-        Create Chat"
-        onPress={() => {
-          createChatRoom(user.uid, "Rick");
-        }}
-      ></Button>
       <Text>Chat</Text>
     </>
   );

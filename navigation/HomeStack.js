@@ -32,10 +32,10 @@ const handleSignOut = async () => {
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
+      <DrawerItemList style={{color: 'black'}} {...props} />
       <DrawerItem
         label={() => <Text style={{ color: "white" }}>Log Out</Text>}
-        style={{ backgroundColor: "gray" }}
+        style={styles.drawList}
         onPress={() => handleSignOut()}
       />
     </DrawerContentScrollView>
@@ -45,9 +45,15 @@ function CustomDrawerContent(props) {
 export default function HomeStack({ navigation }) {
   return (
     <>
-      <Header />
+      {/* <Header/> */}
       <Drawer.Navigator
         initialRouteName="HomeScreen"
+        screenOptions={{
+          drawerStyle: {
+            backgroundColor: '#B2D2B6',
+            width: 240,
+          },
+        }}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen name="Home" component={HomeScreen} />
@@ -61,3 +67,12 @@ export default function HomeStack({ navigation }) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  drawList: {
+    backgroundColor: "#1C7C54"
+  },
+  header: {
+    backgroundColor: "#B2D2B6"
+  }
+})
