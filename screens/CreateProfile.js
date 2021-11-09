@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#D1C6AD",
     width: "100%",
-    paddingBottom: 30
+    paddingBottom: 200
   },
   inputTop: {
     backgroundColor: "white",

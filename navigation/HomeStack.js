@@ -46,7 +46,7 @@ function CustomDrawerContent(props) {
 export default function HomeStack({ navigation }) {
   return (
     <>
-      {/* <Header style={styles.header}/> */}
+      {/* <Header /> */}
       <Drawer.Navigator
         initialRouteName="HomeScreen"
         screenOptions={{
@@ -60,6 +60,15 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Home" component={HomeScreen} 
         options={{
           title: 'Home',
+          headerStyle: {
+            backgroundColor: "#B2D2B6"
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: 'Arial'
+          },
           drawerIcon: ({focused, size}) => (
              <Ionicons
                 name="md-home"
@@ -71,6 +80,15 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Profile" component={CreateProfile}
         options={{
           title: 'Profile',
+          headerStyle: {
+            backgroundColor: "#B2D2B6"
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: 'Arial'
+          },
           drawerIcon: ({focused, size}) => (
              <Ionicons
                 name="person-outline"
@@ -82,6 +100,15 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Walkers" component={ListWalkersScreen} 
         options={{
           title: 'Walkers',
+          headerStyle: {
+            backgroundColor: "#B2D2B6"
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: 'Arial'
+          },
           drawerIcon: ({focused, size}) => (
              <Ionicons
                 name="walk"
@@ -93,6 +120,15 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Map View" component={MapViewScreen} 
         options={{
           title: 'Map View',
+          headerStyle: {
+            backgroundColor: "#B2D2B6"
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: 'Arial'
+          },
           drawerIcon: ({focused, size}) => (
              <Ionicons
                 name="map"
@@ -104,6 +140,15 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Bookings" component={BookingScreen} 
         options={{
           title: 'Bookings',
+          headerStyle: {
+            backgroundColor: "#B2D2B6"
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: 'Arial'
+          },
           drawerIcon: ({focused, size}) => (
              <Ionicons
                 name="card"
@@ -115,6 +160,15 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Chat" component={ChatNav} 
         options={{
           title: 'Chat',
+          headerStyle: {
+            backgroundColor: "#B2D2B6"
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: 'Arial'
+          },
           drawerIcon: ({focused, size}) => (
              <Ionicons
                 name="chatbox-ellipses-outline"
@@ -126,6 +180,15 @@ export default function HomeStack({ navigation }) {
         <Drawer.Screen name="Support" component={SupportScreen} 
         options={{
           title: 'Support',
+          headerStyle: {
+            backgroundColor: "#B2D2B6"
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: 'Arial'
+          },
           drawerIcon: ({focused, size}) => (
              <Ionicons
                 name="settings-outline"
