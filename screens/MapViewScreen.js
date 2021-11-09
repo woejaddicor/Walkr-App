@@ -15,6 +15,9 @@ const MapViewScreen = () => {
   });
   const [walkers, setWalkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { user, profile, setChatRoom, setChatListView } = useContext(
+    AuthenticatedUserContext
+  );
 
   const { user, profile, setChatRoom, setChatListView } = useContext(
     AuthenticatedUserContext
@@ -91,6 +94,18 @@ const MapViewScreen = () => {
     },
   ];
 
+  const handleChatButton = (walkername, walkerid) => {
+    const res = createChatRoom(
+      user.uid,
+      walkerid,
+      profile.firstname,
+      walkername
+    );
+
+    setChatRoom([walkername, res]);
+    setChatListView(false);
+  };
+
   if (isLoading)
     return (
       <View>
@@ -123,8 +138,17 @@ const MapViewScreen = () => {
                   {walker.firstname} {walker.lastname}
                 </Text>
                 <Text>Postcode: {walker.postcode}</Text>
-                <Text>Bio: 28 year old dog walker based in Manchester city centre</Text>
-                <Button title="🐶 Chat 🐶"></Button>
+                <Text>
+                  Bio: 28 year old dog walker based in Manchester city centre
+                </Text>
+                <Button
+                  title="Chat🐕"
+                  onPress={() => {
+                    console.log("Inside Pressable");
+                  }}
+                >
+                  Chat🐕
+                </Button>
               </View>
             </Callout>
           </Marker>
