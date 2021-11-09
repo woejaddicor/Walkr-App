@@ -53,13 +53,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.row}>
             <Text style={styles.title}>Welcome {user.email}!</Text>
           </View>
-          <Text style={styles.text}>Your UID is: {user.uid} </Text>
-            {/* <IconButton
-              name="logout"
-              size={24}
-              color="#1C7C54"
-              onPress={handleSignOut}
-            /> */}
+          <Text style={styles.aboutWalkr}>Walkr was created to unite dog lovers with those who's canine pals are in need of some daily love. By using this app you can find the perfect human companion for your dog.</Text>
         </View>
       )}
     </>
@@ -97,9 +91,16 @@ const styles = StyleSheet.create({
     height: 200,
     width: 360,
     alignItems: "center",
-    marginBottom: -20
+    marginBottom: -20,
+    marginTop: -50
   },
-  button: {
-    marginTop: 20
+  aboutWalkr: {
+    color:"#1C7C54",
+    fontSize: 16,
+    fontWeight: '400',
+    textAlign: "center",
+    marginRight: 20,
+    marginTop: 100,
+    fontStyle: "italic"
   }
 });

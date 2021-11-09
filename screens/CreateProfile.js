@@ -11,10 +11,12 @@ import {
   Pressable,
   Switch,
   SafeAreaView,
+  Image,
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
 import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
 import SelectDropdown from "react-native-select-dropdown";
+import { ScrollView } from "react-native-gesture-handler";
 
 import geoFetch from "../utils/server";
 
@@ -102,14 +104,18 @@ const CreateProfile = () => {
 
   return (
     <SafeAreaView>
+      <ScrollView>
       <View style={styles.container}>
-        <Text>User Input</Text>
+      <Image style={styles.logo} source={require('../Images/walkr.png')}/>
+        <Text style={styles.title}>Create your profile!</Text>
 
         <View style={styles.switch}>
           <SelectDropdown
             data={userSelect}
+            buttonStyle={styles.dropdown}
+            buttonTextStyle={styles.dropdownText}
             onSelect={(selectedItem, index) => {
-              setIsOwner(selectedItem);
+              setIsOwner(selectedItem)
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem;
@@ -119,13 +125,10 @@ const CreateProfile = () => {
             }}
           />
 
-          {/* <Text>Walker</Text> */}
-          {/* <Switch value={isOwner} onValueChange={toggleSwitch}></Switch> */}
-          {/* <Text>Owner</Text> */}
         </View>
         <TextInput
           title="firstname"
-          style={styles.input}
+          style={styles.inputTop}
           onChangeText={onChangeFirstName}
           value={firstName}
           placeholder="First name"
@@ -144,18 +147,17 @@ const CreateProfile = () => {
         />
         {isOwner === "Walker" ? (
           <TextInput
-            style={styles.input}
+            style={styles.bioInput}
             onChangeText={onChangeBio}
             value={bio}
             placeholder="Bio"
-            numberOfLines={5}
+            numberOfLines={20}
             multiline={true}
           />
         ) : null}
-        <ImagePickerUtil
+        <ImagePickerUtil style={image}
           setImage={setImage}
           image={image}
-          style={styles.submitButton}
         />
 
         <Pressable
@@ -172,6 +174,7 @@ const CreateProfile = () => {
         {error ? <Text>Something went wrong...</Text> : null}
         {success && <Text>Profile successfully updated!</Text>}
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -184,15 +187,39 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     width: "100%",
   },
+  inputTop: {
+    backgroundColor: "white",
+    padding: 10,
+    marginTop: 0,
+    margin: 10,
+    borderRadius: 5,
+    borderColor: '#b2d2b6',
+    borderWidth: 2,
+    width: "80%",
+  },
   input: {
     backgroundColor: "white",
     padding: 10,
     margin: 10,
-    borderRadius: 25,
+    borderRadius: 5,
+    marginTop: 0,
+    borderColor: '#b2d2b6',
+    borderWidth: 2,
     width: "80%",
   },
+  bioInput: {
+    minHeight: 150,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 10,
+    marginTop: 0,
+    borderRadius: 5,
+    borderColor: '#b2d2b6',
+    borderWidth: 2,
+    width: "80%", 
+  },
   submitButton: {
-    width: "80%",
+    width: "20%",
     margin: 10,
     borderRadius: 5,
     backgroundColor: "#D1C6AD",
@@ -206,16 +233,43 @@ const styles = StyleSheet.create({
     width: "80%",
     margin: 10,
     borderRadius: 5,
-    backgroundColor: "#1C7C54",
+    backgroundColor: "#1c7c54",
     textAlign: "center",
     padding: 10,
   },
   switch: {
     flex: 1,
     flexDirection: "row",
-    height: 50,
+    height: 30,
     marginBottom: 40,
   },
+  logo: {
+    height: 200,
+    width: 360,
+    alignItems: "center",
+    marginTop: -10,
+    marginBottom: -20
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#1C7C54",
+    alignSelf: "center",
+    marginTop: -15,
+    paddingBottom: 20,
+  },
+  dropdown: {
+    borderRadius: 5,
+    backgroundColor: '#b2d2b6',
+    height: 40,
+    width: 175
+  },
+  dropdownText: {
+    color: '#1C7C54',
+  },
+  image: {
+    borderRadius: 5
+  }
 });
 
 export default CreateProfile;
