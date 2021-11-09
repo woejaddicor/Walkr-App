@@ -1,9 +1,10 @@
 import MapView, { Marker, Callout } from "react-native-maps";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 import { ref, onValue } from "firebase/database";
 import db from "../config/Database";
-// import { Button } from "../components";
+import createChatRoom from "../utils/createChatRoom";
+import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 
 const MapViewScreen = () => {
   const [region, setRegion] = useState({
@@ -15,15 +16,17 @@ const MapViewScreen = () => {
   const [walkers, setWalkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const { user, profile, setChatRoom, setChatListView } = useContext(
+    AuthenticatedUserContext
+  );
+
+
   useEffect(() => {
     const users = ref(db, "users/walkers/");
     onValue(users, (snapshot) => {
       const data = snapshot.val();
       const userIds = Object.keys(data);
-      // console.log(data, "<===data");
       const result = Object.values(data);
-      console.log(result, "<==result");
-
       const newArr = [];
       const userArr = userIds.map((id) => {
         [id]["firstname"];
@@ -33,6 +36,17 @@ const MapViewScreen = () => {
       setIsLoading(false);
     });
   }, []);
+
+  const handleChatButton = (walkername, walkerid) => {
+    const res = createChatRoom(
+      user.uid,
+      walkerid,
+      profile.firstname,
+      walkername
+    );
+    setChatRoom([walkername, res]);
+    setChatListView(false);
+  };
 
   const demoWalkers = [
     {
@@ -94,7 +108,6 @@ const MapViewScreen = () => {
       onRegionChangeComplete={(region) => setRegion(region)}
     >
       {walkers.map((walker) => {
-        console.log(walker);
         let latitude = Number.parseFloat(walker.latitude);
         let longitude = Number.parseFloat(walker.longitude);
         return (
@@ -104,7 +117,7 @@ const MapViewScreen = () => {
               longitude: longitude,
             }}
           >
-            <Callout style={styles.plainView}>
+            <Callout style={styles.plainView} onPress={ ()=>{handleChatButton(walker.firstname, walker.userid)} }>
               <View>
                 <Text>
                   {walker.firstname} {walker.lastname}

@@ -45,15 +45,12 @@ const ListWalkers = ({ navigation }) => {
   }, []);
 
   const handleChatButton = (walkername, walkerid) => {
-    console.log(walkername, "<<< Walker name");
-    console.log(walkerid, "<<<< Walker id");
     const res = createChatRoom(
       user.uid,
       walkerid,
       profile.firstname,
       walkername
     );
-    console.log(user.uid, walkerid, profile.firstname, walkername, "<<<<<");
     setChatRoom([walkername, res]);
     setChatListView(false);
   };

@@ -9,7 +9,6 @@ import {
   TextInput,
   View,
   Pressable,
-  Switch,
   SafeAreaView,
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
@@ -19,7 +18,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import geoFetch from "../utils/server";
 
 const CreateProfile = () => {
-  const { user, setUser, profile, setProfile } = useContext(
+  const { user, setProfile } = useContext(
     AuthenticatedUserContext
   );
   const [isOwner, setIsOwner] = useState(null);
@@ -30,6 +29,7 @@ const CreateProfile = () => {
   const [image, setImage] = useState(null);
   const [bio, onChangeBio] = useState("");
   const [success, setSuccess] = useState(false);
+  const [hourlyRate, setHourlyRate] = useState()
 
   let userType;
 
@@ -58,6 +58,7 @@ const CreateProfile = () => {
           longitude: res.longitude,
           latitude: res.latitude,
           userid: user.uid,
+          hourlyRate
         });
         return res;
       })
@@ -71,6 +72,7 @@ const CreateProfile = () => {
           avatar: `users/${user.uid}/avatar`,
           longitude: res.longitude,
           latitude: res.latitude,
+          hourlyRate
         });
       })
       .then(() => {
@@ -92,6 +94,7 @@ const CreateProfile = () => {
         setImage(null);
         onChangeBio("");
         setSuccess(true);
+        setHourlyRate("")
       })
       .catch((err) => {
         console.log(err);
@@ -119,10 +122,6 @@ const CreateProfile = () => {
               return item;
             }}
           />
-
-          {/* <Text>Walker</Text> */}
-          {/* <Switch value={isOwner} onValueChange={toggleSwitch}></Switch> */}
-          {/* <Text>Owner</Text> */}
         </View>
         <TextInput
           title="firstname"
@@ -144,6 +143,7 @@ const CreateProfile = () => {
           placeholder="Postcode"
         />
         {isOwner === "Walker" ? (
+          <>
           <TextInput
             style={styles.input}
             onChangeText={onChangeBio}
@@ -152,6 +152,13 @@ const CreateProfile = () => {
             numberOfLines={5}
             multiline={true}
           />
+          <TextInput 
+           style={styles.input}
+           onChangeText={setHourlyRate}
+           value={hourlyRate}
+           placeholder="Hourly rate"
+          />
+          </>
         ) : null}
         <ImagePickerUtil
           setImage={setImage}
