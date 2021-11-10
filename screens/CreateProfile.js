@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1c7c54",
     textAlign: "center",
     padding: 10,
-    marginTop: 15,
+    marginTop: 5
   },
   switch: {
     flex: 1,

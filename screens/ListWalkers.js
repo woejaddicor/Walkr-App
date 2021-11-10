@@ -43,7 +43,6 @@ const ListWalkers = ({ navigation }) => {
 
       return Promise.all(getImages).then(() => {
         setIsLoading(false);
-        // console.log(result);
         if (sortBy) {
           const sortedResult = result.sort((walkerA, walkerB) => {
             const nameA = walkerA[1][sortBy];
@@ -152,7 +151,7 @@ const ListWalkers = ({ navigation }) => {
                   </Button>
                 </CollapseHeader>
                 <CollapseBody>
-                  <Text style={styles.postcode}></Text>
+                  <Text style={styles.postcode}>{walker[1].userType}</Text>
                   <Text style={styles.bio}>{walker[1].bio}</Text>
                   <Button
                     onPress={() => {

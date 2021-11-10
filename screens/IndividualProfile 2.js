@@ -9,16 +9,13 @@ export default function individualProfile ({route, navigation}) {
     const [individualProfile, setIndivudalProfile] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const {walker} = route.params;
-    console.log(walker);
 
     useEffect(() => {
       const user = ref(db, `users/walkers/${userId}`);
       onValue(users, (snapshot) => {
         const data = snapshot.val();
         const userIds = Object.keys(data);
-        console.log(data, "<===data");
         const result = Object.values(data);
-        console.log(result, "<==result");
   
         const newArr = [];
         const userArr = userIds.map((id) => {

@@ -6,6 +6,7 @@ import {
   Button,
   StyleSheet,
   ScrollView,
+  Image
 } from "react-native";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import db from "../config/Database";
@@ -178,12 +179,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   viewusertrue: {
-    backgroundColor: "white",
     marginLeft: 10,
     marginTop: 10,
     marginBottom: 5,
     padding: 5,
-    width: "60%",
+    width: "70%",
+    minHeight: 40,
     backgroundColor: "#E2F3E7",
     color: '#122B1A',
     borderColor: "#b2d2b6",
@@ -201,7 +202,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     padding: 5,
-    width: "60%",
+    width: "70%",
+    minHeight: 40,
     backgroundColor: "#D6F5FF",
     borderColor: "#C2DFFF",
     color: '#1B2845',
@@ -234,7 +236,7 @@ const styles = StyleSheet.create({
     minHeight: 100,
     fontWeight: "600",
     color: "#1C7C54",
-    width: "97%",
+    width: '95%',
     marginLeft: "auto",
     marginTop: 10,
     marginRight: "auto",
@@ -264,7 +266,7 @@ const styles = StyleSheet.create({
   fontWeight: "500",
   textAlign: "center",
   marginTop: 10
-  }
+  },
 });
 
 export default ChatRoom;
