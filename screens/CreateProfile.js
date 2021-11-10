@@ -10,6 +10,7 @@ import {
   View,
   Pressable,
   Image,
+  Alert
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
 import { getStorage, uploadBytes, ref as pickref } from "@firebase/storage";
@@ -29,6 +30,16 @@ const CreateProfile = () => {
   const [bio, onChangeBio] = useState("");
   const [success, setSuccess] = useState(false);
   const [hourlyRate, setHourlyRate] = useState();
+  const [profileUpdated, setProfileUpdated] = useState(false)
+
+  const createAlert = () =>
+    Alert.alert(
+      "Alert",
+      "Update sucessful!",
+      [
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
 
   let userType;
 
@@ -87,13 +98,14 @@ const CreateProfile = () => {
         uploadBytes(ref, blob);
       })
       .then(() => {
-        onChangeFirstName("");
-        onChangeLastName("");
-        onChangePostcode("");
-        setImage(null);
-        onChangeBio("");
-        setSuccess(true);
-        setHourlyRate("");
+        // onChangeFirstName("");
+        // onChangeLastName("");
+        // onChangePostcode("");
+        // setImage(null);
+        // onChangeBio("");
+        // setSuccess(true);
+        // setHourlyRate("");
+        setProfileUpdated(true)
       })
       .catch((err) => {
         console.log(err);
@@ -105,6 +117,7 @@ const CreateProfile = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {profileUpdated ? createAlert() : null}
       <View style={styles.container}>
         <Image style={styles.logo} source={require("../Images/walkr.png")} />
         <Text style={styles.title}>Create your profile!</Text>
@@ -173,7 +186,7 @@ const CreateProfile = () => {
           onPress={handleButton}
           disabled={!postcode || !lastName || !firstName || !image || !isOwner}
         >
-          <Text style={styles.submitButtonText}>Submit Profile</Text>
+          <Text style={styles.submitButtonText}>Update Details</Text>
         </Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
         {success && <Text>Profile successfully updated!</Text>}
