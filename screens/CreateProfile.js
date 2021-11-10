@@ -9,7 +9,6 @@ import {
   TextInput,
   View,
   Pressable,
-  SafeAreaView,
   Image,
 } from "react-native";
 import ImagePickerUtil from "../utils/ImagePicker";
@@ -18,7 +17,6 @@ import SelectDropdown from "react-native-select-dropdown";
 import { ScrollView } from "react-native-gesture-handler";
 
 import geoFetch from "../utils/server";
-import { shadow } from "react-native-paper";
 
 const CreateProfile = () => {
   const { user, setProfile } = useContext(
@@ -156,7 +154,7 @@ const CreateProfile = () => {
             onChangeText={onChangeBio}
             value={bio}
             placeholder="Bio"
-            numberOfLines={20}
+            numberOfLines={10}
             multiline={true}
           />
           <TextInput 
