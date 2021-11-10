@@ -33,7 +33,7 @@ export default function ChatScreen() {
         chats.map((chat) => {
           return (
             <Pressable
-            style={styles.chatoption}
+              style={styles.chatoption}
               key={chat[0]}
               onPress={async () => {
                 await setChatListView(false);
@@ -47,16 +47,14 @@ export default function ChatScreen() {
             </Pressable>
           );
         })}
-
-
     </View>
-
   );
 }
 
 const styles = StyleSheet.create({
   chatcontainer: {
     backgroundColor: "#d1c6ad",
+    flex: 1,
   },
   chatoption: {
     backgroundColor: "#f0ede5",
@@ -67,11 +65,11 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "80%",
     fontSize: 25,
-    borderRadius: 5
+    borderRadius: 5,
   },
   title: {
     textAlign: "center",
     fontSize: 25,
-    margin: 10
-  }
+    margin: 10,
+  },
 });

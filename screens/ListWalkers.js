@@ -24,7 +24,7 @@ const ListWalkers = ({ navigation }) => {
   );
   const [sortBy, setSortBy] = useState();
 
-    const sortSelect = ['Hourly Rate', 'User Rating']
+  const sortSelect = ["Hourly Rate", "User Rating"];
 
   useEffect(() => {
     const users = ref(db, "users/walkers/");
@@ -43,7 +43,7 @@ const ListWalkers = ({ navigation }) => {
 
       return Promise.all(getImages).then(() => {
         setIsLoading(false);
-        console.log(result);
+        // console.log(result);
         if (sortBy) {
           const sortedResult = result.sort((walkerA, walkerB) => {
             const nameA = walkerA[1][sortBy];
@@ -83,33 +83,33 @@ const ListWalkers = ({ navigation }) => {
     );
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <Image style={styles.logo} source={require("../Images/walkr.png")} />
         <View style={styles.switch}>
-        <SelectDropdown
-        defaultButtonText={"Sort by"}
-          data={sortSelect}
-          buttonStyle={styles.dropdown}
-          buttonTextStyle={styles.dropdownText}
-          onSelect={(selectedItem, index) => {
-            let firebaseitem = null
-            console.log(selectedItem)
-            if (selectedItem === "Hourly Rate") {
-              firebaseitem = 'firstname'
-            } else {
-              firebaseitem = 'userid'
-            }
-            console.log(firebaseitem)
-            setSortBy(firebaseitem);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-        />
+          <SelectDropdown
+            defaultButtonText={"Sort by"}
+            data={sortSelect}
+            buttonStyle={styles.dropdown}
+            buttonTextStyle={styles.dropdownText}
+            onSelect={(selectedItem, index) => {
+              let firebaseitem = null;
+              // console.log(selectedItem);
+              if (selectedItem === "Hourly Rate") {
+                firebaseitem = "hourlyRate";
+              } else {
+                firebaseitem = "bones";
+              }
+              // console.log(firebaseitem);
+              setSortBy(firebaseitem);
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem;
+            }}
+            rowTextForSelection={(item, index) => {
+              return item;
+            }}
+          />
         </View>
         <Text style={styles.title}>All Walkers in your area</Text>
         <View>
@@ -131,9 +131,15 @@ const ListWalkers = ({ navigation }) => {
                   <Text style={styles.name}>
                     {walker[1].firstname} {walker[1].lastname}
                   </Text>
-                  <Text style={styles.postcode}>{walker[1].hourlyRate}</Text>
                   <Text style={styles.postcode}>
-                    Post Code: {walker[1].postcode}
+                    {"🐾 ".repeat(walker[1].bones)}
+                  </Text>
+                  <Text style={styles.postcode}>
+                    {" "}
+                    £{walker[1].hourlyRate} / hour
+                  </Text>
+                  <Text style={styles.postcode}>
+                    Post Code: {walker[1].postcode.toUpperCase()}
                   </Text>
                   <Button
                     accessibilityLabel="Show more"
@@ -242,19 +248,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: "auto",
     marginTop: -20,
-    marginRight: "auto"
+    marginRight: "auto",
   },
   dropdown: {
     borderRadius: 5,
-    backgroundColor: '#b2d2b6',
+    backgroundColor: "#b2d2b6",
     height: 40,
     width: 200,
     borderColor: "#1C7C54",
-    borderWidth: 2
+    borderWidth: 2,
   },
   dropdownText: {
-    color: '#1C7C54',
-    fontWeight: '700'
+    color: "#1C7C54",
+    fontWeight: "700",
   },
   switch: {
     flex: 1,
@@ -262,6 +268,6 @@ const styles = StyleSheet.create({
     height: 30,
     marginBottom: 40,
     marginLeft: "auto",
-    marginRight: 'auto'
-  }
+    marginRight: "auto",
+  },
 });
