@@ -83,7 +83,7 @@ const ListWalkers = ({ navigation }) => {
     );
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <Image style={styles.logo} source={require("../Images/walkr.png")} />
         <View style={styles.switch}>

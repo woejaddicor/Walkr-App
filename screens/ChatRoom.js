@@ -67,6 +67,7 @@ const ChatRoom = () => {
   return (
     <ScrollView
       style={styles.chatroom}
+      showsVerticalScrollIndicator={false}
       ref={scrollViewRef}
       onContentSizeChange={() =>
         scrollViewRef.current.scrollToEnd({ animated: true })

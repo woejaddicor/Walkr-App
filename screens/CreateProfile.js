@@ -19,9 +19,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import geoFetch from "../utils/server";
 
 const CreateProfile = () => {
-  const { user, setProfile } = useContext(
-    AuthenticatedUserContext
-  );
+  const { user, setProfile } = useContext(AuthenticatedUserContext);
   const [isOwner, setIsOwner] = useState(null);
   const [firstName, onChangeFirstName] = useState();
   const [lastName, onChangeLastName] = useState();
@@ -30,7 +28,7 @@ const CreateProfile = () => {
   const [image, setImage] = useState(null);
   const [bio, onChangeBio] = useState("");
   const [success, setSuccess] = useState(false);
-  const [hourlyRate, setHourlyRate] = useState()
+  const [hourlyRate, setHourlyRate] = useState();
 
   let userType;
 
@@ -59,7 +57,7 @@ const CreateProfile = () => {
           longitude: res.longitude,
           latitude: res.latitude,
           userid: user.uid,
-          hourlyRate
+          hourlyRate,
         });
         return res;
       })
@@ -73,7 +71,7 @@ const CreateProfile = () => {
           avatar: `users/${user.uid}/avatar`,
           longitude: res.longitude,
           latitude: res.latitude,
-          hourlyRate
+          hourlyRate,
         });
       })
       .then(() => {
@@ -95,7 +93,7 @@ const CreateProfile = () => {
         setImage(null);
         onChangeBio("");
         setSuccess(true);
-        setHourlyRate("")
+        setHourlyRate("");
       })
       .catch((err) => {
         console.log(err);
@@ -106,9 +104,9 @@ const CreateProfile = () => {
   const userSelect = ["Walker", "Owner"];
 
   return (
-      <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-      <Image style={styles.logo} source={require('../Images/walkr.png')}/>
+        <Image style={styles.logo} source={require("../Images/walkr.png")} />
         <Text style={styles.title}>Create your profile!</Text>
 
         <View style={styles.switch}>
@@ -117,7 +115,7 @@ const CreateProfile = () => {
             buttonStyle={styles.dropdown}
             buttonTextStyle={styles.dropdownText}
             onSelect={(selectedItem, index) => {
-              setIsOwner(selectedItem)
+              setIsOwner(selectedItem);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem;
@@ -126,7 +124,6 @@ const CreateProfile = () => {
               return item;
             }}
           />
-
         </View>
         <TextInput
           title="firstname"
@@ -149,42 +146,39 @@ const CreateProfile = () => {
         />
         {isOwner === "Walker" ? (
           <>
-          <TextInput
-            style={styles.bioInput}
-            onChangeText={onChangeBio}
-            value={bio}
-            placeholder="Bio"
-            numberOfLines={10}
-            multiline={true}
-          />
-          <TextInput 
-           style={styles.input}
-           onChangeText={setHourlyRate}
-           value={hourlyRate}
-           placeholder="Hourly rate"
-          />
+            <TextInput
+              style={styles.bioInput}
+              onChangeText={onChangeBio}
+              value={bio}
+              placeholder="Bio"
+              numberOfLines={10}
+              multiline={true}
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setHourlyRate}
+              value={hourlyRate}
+              placeholder="Hourly rate"
+            />
           </>
         ) : null}
-        <ImagePickerUtil
-          setImage={setImage}
-          image={image}
-        />
+        <ImagePickerUtil setImage={setImage} image={image} />
 
         <Pressable
           style={
             !postcode || !lastName || !firstName || !image || !isOwner
-            ? styles.disabledButton
-            : styles.submitButton
+              ? styles.disabledButton
+              : styles.submitButton
           }
           onPress={handleButton}
           disabled={!postcode || !lastName || !firstName || !image || !isOwner}
-          >
+        >
           <Text style={styles.submitButtonText}>Submit Profile</Text>
         </Pressable>
         {error ? <Text>Something went wrong...</Text> : null}
         {success && <Text>Profile successfully updated!</Text>}
       </View>
-      </ScrollView>
+    </ScrollView>
   );
 };
 
@@ -195,7 +189,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#D1C6AD",
     width: "100%",
-    paddingBottom: 200
+    paddingBottom: 200,
   },
   inputTop: {
     backgroundColor: "white",
@@ -203,7 +197,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     margin: 10,
     borderRadius: 10,
-    borderColor: '#b2d2b6',
+    borderColor: "#b2d2b6",
     borderWidth: 2,
     width: "80%",
   },
@@ -213,36 +207,36 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     marginTop: 0,
-    borderColor: '#b2d2b6',
+    borderColor: "#b2d2b6",
     borderWidth: 2,
     width: "80%",
   },
   bioInput: {
     minHeight: 150,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 10,
     margin: 10,
     marginTop: 0,
     borderRadius: 10,
-    borderColor: '#b2d2b6',
+    borderColor: "#b2d2b6",
     borderWidth: 2,
-    width: "80%", 
+    width: "80%",
   },
   submitButtonText: {
-    color: 'white',
-    fontWeight: '400',
+    color: "white",
+    fontWeight: "400",
     fontSize: 20,
   },
   disabledButton: {
     width: 150,
     margin: 10,
     borderRadius: 10,
-    borderColor: '#b2d2b6',
+    borderColor: "#b2d2b6",
     borderWidth: 3,
     backgroundColor: "#1c7c54",
     textAlign: "center",
     padding: 10,
-    marginTop: 15
+    marginTop: 15,
   },
   switch: {
     flex: 1,
@@ -255,7 +249,7 @@ const styles = StyleSheet.create({
     width: 360,
     alignItems: "center",
     marginTop: -10,
-    marginBottom: -20
+    marginBottom: -20,
   },
   title: {
     fontSize: 20,
@@ -267,19 +261,19 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     borderRadius: 5,
-    backgroundColor: '#b2d2b6',
+    backgroundColor: "#b2d2b6",
     height: 40,
     width: 200,
     borderColor: "#1C7C54",
-    borderWidth: 2
+    borderWidth: 2,
   },
   dropdownText: {
-    color: '#1C7C54',
-    fontWeight: '700'
+    color: "#1C7C54",
+    fontWeight: "700",
   },
   imageSelectButton: {
-    backgroundColor: 'red'
-  }
+    backgroundColor: "red",
+  },
 });
 
 export default CreateProfile;
