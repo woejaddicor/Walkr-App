@@ -139,30 +139,31 @@ const MapViewScreen = () => {
               <View style={styles.container}>
                 <Image
                   style={{
-                    width: 60,
-                    height: 60,
+                    width: 80,
+                    height: 80,
                     borderRadius: 50,
-                    marginTop: 10,
+                    marginTop: 15,
                     alignItems: "center",
                   }}
                   source={{
                     uri: walker[1].httpUrl,
                   }}
                 />
-                <Text>
+                <Text style={styles.name}>
                   {walker[1].firstname} {walker[1].lastname}
                 </Text>
-                <Text>Postcode: {walker[1].postcode}</Text>
-                <Text>
-                  Bio: 28 year old dog walker based in Manchester city centre
+                <Text style={styles.postcode}>{walker[1].postcode}</Text>
+                <Text numberOfLines={5} styles={styles.bio}>
+                  {walker[1].bio}
                 </Text>
                 <Button
-                  title="Chat🐕"
+                style={styles.chatButton}
+                  title="Chat"
                   onPress={() => {
                     console.log("Inside Pressable");
                   }}
                 >
-                  Chat🐕
+                  Chat
                 </Button>
               </View>
             </Callout>
@@ -187,7 +188,19 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   plainView: {
-    width: 150,
-    height: 200,
+    width: 250,
+    height: 300,
+  },
+  name: {
+    marginTop: 10,
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+  bio: {
+    marginHorizontal: 10
+  },
+  postcode: {
+    fontSize: 20,
+    fontWeight: "bold"
   },
 });

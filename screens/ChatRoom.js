@@ -73,8 +73,8 @@ const ChatRoom = () => {
         scrollViewRef.current.scrollToEnd({ animated: true })
       }
     >
-      {chatRoom ? <Text>Chatting with {chatRoom[0]}</Text> : null}
-      <Text>Message History</Text>
+      {chatRoom ? <Text style={styles.title}>Chatting with {chatRoom[0]}</Text> : null}
+      {/* <Text style={styles.title}>Message History</Text> */}
 
       <View style={styles.chatcontainer}>
         {messageHistory
@@ -137,7 +137,7 @@ const ChatRoom = () => {
       <TextInput
         placeholder="Enter message"
         multiline={true}
-        numberOfLines={4}
+        numberOfLines={8}
         onChangeText={setNewMessage}
         value={newMessage}
         style={styles.textinput}
@@ -153,6 +153,7 @@ const ChatRoom = () => {
         }
       />
       <Button
+        style={styles.backButton}
         title="Go Back"
         onPress={() => {
           setChatListView(true);
@@ -178,28 +179,34 @@ const styles = StyleSheet.create({
   },
   viewusertrue: {
     backgroundColor: "white",
-    marginLeft: 5,
-    marginTop: 5,
+    marginLeft: 10,
+    marginTop: 10,
     marginBottom: 5,
     padding: 5,
     width: "60%",
-    borderWidth: 0,
-    borderColor: "black",
+    backgroundColor: "#E2F3E7",
+    color: '#122B1A',
+    borderColor: "#b2d2b6",
+    borderWidth: 2,
+    borderRadius: 5,
     borderBottomLeftRadius: 0,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },
   viewuserfalse: {
-    backgroundColor: "#2C97F3",
-    marginRight: 5,
+    backgroundColor: "white",
+    marginRight: 10,
     marginLeft: "auto",
     marginTop: 5,
     marginBottom: 5,
     padding: 5,
     width: "60%",
-    borderWidth: 0,
-    borderColor: "black",
+    backgroundColor: "#D6F5FF",
+    borderColor: "#C2DFFF",
+    color: '#1B2845',
+    borderWidth: 2,
+    borderRadius: 5,
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
@@ -221,10 +228,15 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: "black",
     backgroundColor: "#f0ede5",
+    borderColor: "#b2d2b6",
+    borderWidth: 2,
     borderRadius: 5,
-    height: 50,
+    minHeight: 100,
+    fontWeight: "600",
+    color: "#1C7C54",
     width: "97%",
     marginLeft: "auto",
+    marginTop: 10,
     marginRight: "auto",
     marginBottom: 10,
   },
@@ -234,6 +246,25 @@ const styles = StyleSheet.create({
   sendbutton: {
     backgroundColor: "red",
   },
+  backButton: {
+    width: 150,
+    margin: 10,
+    borderRadius: 10,
+    color: 'red',
+    borderColor: "#b2d2b6",
+    borderWidth: 3,
+    backgroundColor: "#1c7c54",
+    textAlign: "center",
+    padding: 10,
+    marginTop: 15,
+  },
+  title: {
+  fontSize: 25,
+  color: "#1C7C54",
+  fontWeight: "500",
+  textAlign: "center",
+  marginTop: 10
+  }
 });
 
 export default ChatRoom;

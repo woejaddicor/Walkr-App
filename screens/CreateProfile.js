@@ -247,6 +247,8 @@ const styles = StyleSheet.create({
   logo: {
     height: 200,
     width: 360,
+    marginRight: 'auto',
+    marginLeft: 'auto',
     alignItems: "center",
     marginTop: -10,
     marginBottom: -20,

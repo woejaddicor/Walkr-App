@@ -84,13 +84,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "normal",
     textAlign: "center",
-    marginRight: 8,
+    marginRight: 'auto',
+    marginLeft: 'auto',
     color: "#1C7C54",
   },
   logo: {
     height: 200,
     width: 360,
     alignItems: "center",
+    marginRight: 'auto',
+    marginLeft: 'auto',
     marginBottom: -20,
     marginTop: -50
   },
@@ -99,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     textAlign: "center",
-    marginRight: 20,
+    marginRight: 'auto',
     marginTop: 50,
     fontStyle: "italic"
   }

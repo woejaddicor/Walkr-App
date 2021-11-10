@@ -119,6 +119,8 @@ const ListWalkers = ({ navigation }) => {
                 <CollapseHeader>
                   <Image
                     style={{
+                      marginRight: 'auto',
+                      marginLeft: 'auto',
                       width: 155,
                       height: 155,
                       borderRadius: 10,
@@ -150,7 +152,7 @@ const ListWalkers = ({ navigation }) => {
                   </Button>
                 </CollapseHeader>
                 <CollapseBody>
-                  <Text style={styles.postcode}>{walker[1].userType}</Text>
+                  <Text style={styles.postcode}></Text>
                   <Text style={styles.bio}>{walker[1].bio}</Text>
                   <Button
                     onPress={() => {
