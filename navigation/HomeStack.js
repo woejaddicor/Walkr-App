@@ -103,7 +103,7 @@ export default function HomeStack({ navigation }) {
              />
           ),
         }}/>
-        <Drawer.Screen name="Walkers" component={ListWalkers} 
+        <Drawer.Screen name="Walkers" component={WalkersNav} 
         options={{
           title: 'Walkers',
           headerStyle: {
@@ -123,7 +123,7 @@ export default function HomeStack({ navigation }) {
              />
           ),
         }}/>
-        <Drawer.Screen name="Map View" component={MapViewScreen} 
+        <Drawer.Screen name="Map View" component={MapNav} 
         options={{
           title: 'Map View',
           headerStyle: {
