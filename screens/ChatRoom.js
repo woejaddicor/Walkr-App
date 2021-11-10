@@ -143,6 +143,7 @@ const ChatRoom = () => {
       />
       <Button
         title="Send"
+        color="#1C7C54"
         onPress={handleSubmit}
         disabled={!newMessage || newMessage === ""}
         style={
@@ -153,6 +154,7 @@ const ChatRoom = () => {
       />
       <Button
         title="Go Back"
+        color="#1C7C54"
         onPress={() => {
           setChatListView(true);
         }}
@@ -186,6 +188,7 @@ const styles = StyleSheet.create({
     color: '#222F24',
     padding: 5,
     height: 40,
+    fontSize: 15,
     width: "70%",
     borderBottomLeftRadius: 0,
     borderTopLeftRadius: 5,
@@ -202,6 +205,7 @@ const styles = StyleSheet.create({
     color: "#0F1943",
     padding: 5,
     height: 40,
+    fontSize: 15,
     width: "70%",
     borderWidth: 2,
     borderColor: "#BAE2F3",
@@ -229,6 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 80,
     color: "#222F24",
+    fontSize: 15,
     width: "95%",
     marginLeft: "auto",
     marginTop: 10,
