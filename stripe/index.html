@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cloud Functions for Firebase with Stripe Payments</title>
+    <title>Make a Payment</title>
     <link
       type="text/css"
       rel="stylesheet"
@@ -24,13 +24,11 @@
     }
   </style>
   <body>
-    <h1>Cloud Functions for Firebase with Stripe Payments</h1>
+    <h1>Make a Payment</h1>
     <section id="firebaseui-auth-container"></section>
     <div id="loader">Loading &hellip;</div>
-    <section id="content" style="display: none;">
-      <button type="button" id="signout">
-        Sign out
-      </button>
+    <section id="content" style="display: none">
+      <button type="button" id="signout">Sign out</button>
       <div>
         <h2>Payment Methods</h2>
         <details id="add-new-card">
@@ -88,18 +86,11 @@
         </form>
       </div>
       <div>
-        <h2>Payments</h2>
+        <h2>Previous Payments</h2>
         <ul id="payments-list"></ul>
       </div>
     </section>
     <hr />
-    <footer>
-      <a
-        href="https://github.com/firebase/functions-samples/tree/main/stripe"
-      >
-        View source code
-      </a>
-    </footer>
 
     <!-- Import and configure the Firebase SDK -->
     <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
