@@ -73,8 +73,7 @@ const ChatRoom = () => {
         scrollViewRef.current.scrollToEnd({ animated: true })
       }
     >
-      {chatRoom ? <Text>Chatting with {chatRoom[0]}</Text> : null}
-      <Text>Message History</Text>
+      {chatRoom ? <Text style={styles.title}>Chatting with {chatRoom[0]}</Text> : null}
 
       <View style={styles.chatcontainer}>
         {messageHistory
@@ -144,6 +143,7 @@ const ChatRoom = () => {
       />
       <Button
         title="Send"
+        color="#1C7C54"
         onPress={handleSubmit}
         disabled={!newMessage || newMessage === ""}
         style={
@@ -154,6 +154,7 @@ const ChatRoom = () => {
       />
       <Button
         title="Go Back"
+        color="#1C7C54"
         onPress={() => {
           setChatListView(true);
         }}
@@ -177,29 +178,37 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   viewusertrue: {
-    backgroundColor: "white",
-    marginLeft: 5,
+    borderWidth: 2,
+    borderColor: "#b2d2b6",
+    backgroundColor: "#DEE6DB",
+    marginLeft: 10,
+    borderRadius: 5,
     marginTop: 5,
     marginBottom: 5,
+    color: '#222F24',
     padding: 5,
-    width: "60%",
-    borderWidth: 0,
-    borderColor: "black",
+    height: 40,
+    fontSize: 15,
+    width: "70%",
     borderBottomLeftRadius: 0,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },
   viewuserfalse: {
-    backgroundColor: "#2C97F3",
-    marginRight: 5,
+    backgroundColor: "#DCF0F9",
+    marginRight: 10,
     marginLeft: "auto",
-    marginTop: 5,
     marginBottom: 5,
+    marginTop: 5,
+    borderRadius: 5,
+    color: "#0F1943",
     padding: 5,
-    width: "60%",
-    borderWidth: 0,
-    borderColor: "black",
+    height: 40,
+    fontSize: 15,
+    width: "70%",
+    borderWidth: 2,
+    borderColor: "#BAE2F3",
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
@@ -218,13 +227,16 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   textinput: {
-    borderWidth: 0,
-    borderColor: "black",
+    borderWidth: 3,
+    borderColor: "#b2d2b6",
     backgroundColor: "#f0ede5",
     borderRadius: 5,
-    height: 50,
-    width: "97%",
+    height: 80,
+    color: "#222F24",
+    fontSize: 15,
+    width: "95%",
     marginLeft: "auto",
+    marginTop: 10,
     marginRight: "auto",
     marginBottom: 10,
   },
@@ -234,6 +246,14 @@ const styles = StyleSheet.create({
   sendbutton: {
     backgroundColor: "red",
   },
+  title: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#1C7C54",
+    alignSelf: "center",
+    marginTop: 15,
+    paddingBottom: 20,
+  }
 });
 
 export default ChatRoom;

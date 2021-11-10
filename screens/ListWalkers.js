@@ -43,7 +43,6 @@ const ListWalkers = ({ navigation }) => {
 
       return Promise.all(getImages).then(() => {
         setIsLoading(false);
-        // console.log(result);
         if (sortBy) {
           const sortedResult = result.sort((walkerA, walkerB) => {
             const nameA = walkerA[1][sortBy];
@@ -119,6 +118,8 @@ const ListWalkers = ({ navigation }) => {
                 <CollapseHeader>
                   <Image
                     style={{
+                      marginRight: 'auto',
+                      marginLeft: 'auto',
                       width: 155,
                       height: 155,
                       borderRadius: 10,

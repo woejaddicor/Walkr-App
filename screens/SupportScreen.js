@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, Image } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react/cjs/react.development"
 
 export default function SupportScreen() {
   const [problem, setProblem] = useState();
@@ -14,9 +14,8 @@ export default function SupportScreen() {
   ];
 
   return (
-    <View>
-      <Text>Support</Text>
-
+    <View style={styles.container}>
+      <Image style={styles.logo} source={require("../Images/walkr.png")} />
       <View style={styles.switch}>
         <SelectDropdown
           defaultButtonText={"Select issue"}
@@ -43,7 +42,8 @@ export default function SupportScreen() {
         keyboardType="text"
       />
       <Button 
-      title={"Submit"}
+      color="#1C7C54"
+      title="Submit"
       onPress={() => {
         setTextInput('Your response has been sent!')
       }}
@@ -52,4 +52,49 @@ export default function SupportScreen() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#D1C6AD",
+  },
+  dropdown: {
+    borderRadius: 5,
+    backgroundColor: "#b2d2b6",
+    height: 40,
+    width: 200,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 15,
+    borderColor: "#1C7C54",
+    borderWidth: 2,
+  },
+  dropdownText: {
+    color: "#1C7C54",
+    fontWeight: "700",
+  },
+  input: {
+    borderWidth: 0,
+    borderColor: "black",
+    backgroundColor: "#f0ede5",
+    borderColor: "#b2d2b6",
+    borderWidth: 2,
+    borderRadius: 5,
+    minHeight: 100,
+    fontWeight: "600",
+    color: "#1C7C54",
+    width: "90%",
+    marginLeft: "auto",
+    marginTop: 10,
+    marginRight: "auto",
+    marginBottom: 10,
+  },
+  logo: {
+    height: 200,
+    width: 360,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    alignItems: "center",
+    marginTop: -10,
+    marginBottom: -20,
+  },
+});

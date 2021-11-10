@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1c7c54",
     textAlign: "center",
     padding: 10,
-    marginTop: 15,
+    marginTop: 5
   },
   switch: {
     flex: 1,
@@ -260,6 +260,8 @@ const styles = StyleSheet.create({
   logo: {
     height: 200,
     width: 360,
+    marginRight: 'auto',
+    marginLeft: 'auto',
     alignItems: "center",
     marginTop: -10,
     marginBottom: -20,

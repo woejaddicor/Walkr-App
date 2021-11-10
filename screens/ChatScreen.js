@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, Text, Pressable, View } from "react-native";
+import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import db from "../config/Database";
 import { ref, onValue } from "firebase/database";
@@ -38,15 +38,15 @@ export default function ChatScreen() {
               onPress={async () => {
                 await setChatListView(false);
                 await setChatRoom(chat);
-                console.log(chat, "<<<<");
 
                 navigation.navigate("ChatRoom", { screen: "ChatRoom" });
               }}
             >
-              <Text>{chat[0]}</Text>
+              <Text style={styles.roomText}>{chat[0]} 💬</Text>
             </Pressable>
           );
         })}
+        <Image style={styles.logo} source={require("../Images/walkr.png")} />
     </View>
   );
 }
@@ -58,18 +58,36 @@ const styles = StyleSheet.create({
   },
   chatoption: {
     backgroundColor: "#f0ede5",
+    borderColor: "#b2d2b6",
+    borderWidth: 2,
     marginRight: "auto",
     marginLeft: "auto",
     marginTop: 5,
     marginBottom: 5,
     padding: 10,
-    width: "80%",
+    width: "95%",
     fontSize: 25,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   title: {
+    fontSize: 30,
+    color: "#1C7C54",
+    fontWeight: "500",
     textAlign: "center",
-    fontSize: 25,
-    margin: 10,
+    marginTop: 10
+  },
+  roomText: {
+    fontSize: 18,
+    color: "#1C7C54",
+    fontWeight: "500", 
+  },
+  logo: {
+    height: 200,
+    width: 360,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    alignItems: "center",
+    marginTop: -10,
+    marginBottom: 20,
   },
 });
