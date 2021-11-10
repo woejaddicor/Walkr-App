@@ -1,7 +1,16 @@
 import MapView, { Marker, Callout } from "react-native-maps";
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Button,
+  Image,
+} from "react-native";
 import { ref, onValue } from "firebase/database";
+import { getStorage, getDownloadURL, ref as storeRef } from "firebase/storage";
+
 import db from "../config/Database";
 import createChatRoom from "../utils/createChatRoom";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
@@ -24,14 +33,20 @@ const MapViewScreen = () => {
     onValue(users, (snapshot) => {
       const data = snapshot.val();
       const userIds = Object.keys(data);
-      const result = Object.values(data);
-      const newArr = [];
-      const userArr = userIds.map((id) => {
-        [id]["firstname"];
+      const result = Object.entries(data);
+      const storage = getStorage();
+
+      const getImages = result.map((user) => {
+        const pathReference = storeRef(storage, `users/${user[0]}/avatar`);
+        return getDownloadURL(storeRef(storage, pathReference)).then((url) => {
+          user[1].httpUrl = url;
+        });
       });
 
-      setWalkers(result);
-      setIsLoading(false);
+      return Promise.all(getImages).then(() => {
+        setIsLoading(false);
+        setWalkers(result);
+      });
     });
   }, []);
 
@@ -89,7 +104,6 @@ const MapViewScreen = () => {
     },
   ];
 
-
   if (isLoading)
     return (
       <View>
@@ -107,8 +121,8 @@ const MapViewScreen = () => {
       onRegionChangeComplete={(region) => setRegion(region)}
     >
       {walkers.map((walker) => {
-        let latitude = Number.parseFloat(walker.latitude);
-        let longitude = Number.parseFloat(walker.longitude);
+        let latitude = Number.parseFloat(walker[1].latitude);
+        let longitude = Number.parseFloat(walker[1].longitude);
         return (
           <Marker
             coordinate={{
@@ -116,12 +130,29 @@ const MapViewScreen = () => {
               longitude: longitude,
             }}
           >
-            <Callout style={styles.plainView} onPress={ ()=>{handleChatButton(walker.firstname, walker.userid)} }>
-              <View>
+            <Callout
+              style={styles.plainView}
+              onPress={() => {
+                handleChatButton(walker[1].firstname, walker[1].userid);
+              }}
+            >
+              <View style={styles.container}>
+                <Image
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 50,
+                    marginTop: 10,
+                    alignItems: "center",
+                  }}
+                  source={{
+                    uri: walker[1].httpUrl,
+                  }}
+                />
                 <Text>
-                  {walker.firstname} {walker.lastname}
+                  {walker[1].firstname} {walker[1].lastname}
                 </Text>
-                <Text>Postcode: {walker.postcode}</Text>
+                <Text>Postcode: {walker[1].postcode}</Text>
                 <Text>
                   Bio: 28 year old dog walker based in Manchester city centre
                 </Text>
@@ -147,7 +178,7 @@ export default MapViewScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#D1C6AD",
     alignItems: "center",
     justifyContent: "center",
   },
