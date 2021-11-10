@@ -6,7 +6,6 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Image
 } from "react-native";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import db from "../config/Database";
@@ -75,7 +74,6 @@ const ChatRoom = () => {
       }
     >
       {chatRoom ? <Text style={styles.title}>Chatting with {chatRoom[0]}</Text> : null}
-      {/* <Text style={styles.title}>Message History</Text> */}
 
       <View style={styles.chatcontainer}>
         {messageHistory
@@ -138,7 +136,7 @@ const ChatRoom = () => {
       <TextInput
         placeholder="Enter message"
         multiline={true}
-        numberOfLines={8}
+        numberOfLines={4}
         onChangeText={setNewMessage}
         value={newMessage}
         style={styles.textinput}
@@ -154,7 +152,6 @@ const ChatRoom = () => {
         }
       />
       <Button
-        style={styles.backButton}
         title="Go Back"
         onPress={() => {
           setChatListView(true);
@@ -179,36 +176,35 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   viewusertrue: {
-    marginLeft: 10,
-    marginTop: 10,
-    marginBottom: 5,
-    padding: 5,
-    width: "70%",
-    minHeight: 40,
-    backgroundColor: "#E2F3E7",
-    color: '#122B1A',
-    borderColor: "#b2d2b6",
     borderWidth: 2,
+    borderColor: "#b2d2b6",
+    backgroundColor: "#DEE6DB",
+    marginLeft: 10,
     borderRadius: 5,
+    marginTop: 5,
+    marginBottom: 5,
+    color: '#222F24',
+    padding: 5,
+    height: 40,
+    width: "70%",
     borderBottomLeftRadius: 0,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },
   viewuserfalse: {
-    backgroundColor: "white",
+    backgroundColor: "#DCF0F9",
     marginRight: 10,
     marginLeft: "auto",
-    marginTop: 5,
     marginBottom: 5,
-    padding: 5,
-    width: "70%",
-    minHeight: 40,
-    backgroundColor: "#D6F5FF",
-    borderColor: "#C2DFFF",
-    color: '#1B2845',
-    borderWidth: 2,
+    marginTop: 5,
     borderRadius: 5,
+    color: "#0F1943",
+    padding: 5,
+    height: 40,
+    width: "70%",
+    borderWidth: 2,
+    borderColor: "#BAE2F3",
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
@@ -227,16 +223,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   textinput: {
-    borderWidth: 0,
-    borderColor: "black",
-    backgroundColor: "#f0ede5",
+    borderWidth: 3,
     borderColor: "#b2d2b6",
-    borderWidth: 2,
+    backgroundColor: "#f0ede5",
     borderRadius: 5,
-    minHeight: 100,
-    fontWeight: "600",
-    color: "#1C7C54",
-    width: '95%',
+    height: 80,
+    color: "#222F24",
+    width: "95%",
     marginLeft: "auto",
     marginTop: 10,
     marginRight: "auto",
@@ -248,25 +241,14 @@ const styles = StyleSheet.create({
   sendbutton: {
     backgroundColor: "red",
   },
-  backButton: {
-    width: 150,
-    margin: 10,
-    borderRadius: 10,
-    color: 'red',
-    borderColor: "#b2d2b6",
-    borderWidth: 3,
-    backgroundColor: "#1c7c54",
-    textAlign: "center",
-    padding: 10,
-    marginTop: 15,
-  },
   title: {
-  fontSize: 25,
-  color: "#1C7C54",
-  fontWeight: "500",
-  textAlign: "center",
-  marginTop: 10
-  },
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#1C7C54",
+    alignSelf: "center",
+    marginTop: 15,
+    paddingBottom: 20,
+  }
 });
 
 export default ChatRoom;
