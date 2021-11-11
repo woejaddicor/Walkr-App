@@ -51,9 +51,9 @@ const ListWalkers = ({ navigation }) => {
             const nameB = walkerB[1][sortBy];
             let comparison = 0;
             if (nameA > nameB) {
-              comparison = 1;
-            } else if (nameA < nameB) {
               comparison = -1;
+            } else if (nameA < nameB) {
+              comparison = 1;
             }
             return comparison;
           });
