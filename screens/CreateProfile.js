@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   disabledButton: {
-    width: 150,
+    width: 'auto',
     margin: 10,
     borderRadius: 10,
     borderColor: "#b2d2b6",
