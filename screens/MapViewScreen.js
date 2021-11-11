@@ -107,7 +107,7 @@ const MapViewScreen = () => {
   if (isLoading)
     return (
       <View>
-        <Text>Is loading</Text>
+        <Text style={styles.title}>Loading...</Text>
       </View>
     );
 
@@ -202,5 +202,12 @@ const styles = StyleSheet.create({
   postcode: {
     fontSize: 20,
     fontWeight: "bold"
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#1C7C54",
+    alignSelf: "center",
+    paddingBottom: 20,
   },
 });

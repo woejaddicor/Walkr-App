@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
 import db from "../config/Database";
 import { ref, onValue, orderByChild, query, orderBy } from "firebase/database";
 import { getStorage, getDownloadURL, ref as storeRef } from "firebase/storage";
@@ -15,6 +15,8 @@ import { Button } from "react-native-paper";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import createChatRoom from "../utils/createChatRoom";
 import SelectDropdown from "react-native-select-dropdown";
+
+
 
 const ListWalkers = ({ navigation }) => {
   const [walkers, setWalkers] = useState([]);
@@ -77,7 +79,7 @@ const ListWalkers = ({ navigation }) => {
   if (isLoading)
     return (
       <View>
-        <Text>Is loading</Text>
+        <Text style={styles.title}>Loading...</Text>
       </View>
     );
 
